@@ -2,6 +2,7 @@
 #define _ENGINE_H_
 
 #include "ExportHeader.h"
+#include "Vector2.h"
 
 namespace Engine
 {
