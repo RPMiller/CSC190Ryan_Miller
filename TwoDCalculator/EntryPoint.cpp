@@ -35,13 +35,13 @@ void myDotProductDataCallback(const DotProductData& data)
 	dot2 = Vector2(data.v2i,data.v2j);
 	if(data.projectOntoLeftVector)
 	{
-		proj = projLR(Vector2(data.v2i,data.v2j),Vector2(data.v1i,data.v1j));
-		rej = rejLR(Vector2(data.v2i,data.v2j),Vector2(data.v1i,data.v1j));
+		proj = projLR(dot1,dot2);
+		rej = rejLR(dot1,dot2);
 	}
 	else
 	{
-		proj = projLR(Vector2(data.v1i,data.v1j),Vector2(data.v2i,data.v2j));
-		rej = rejLR(Vector2(data.v1i,data.v1j),Vector2(data.v2i,data.v2j));
+		proj = projLR(dot2,dot1);
+		rej = rejLR(dot2,dot1);
 	}
 }
 
