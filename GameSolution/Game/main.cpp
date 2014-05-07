@@ -5,6 +5,7 @@
 #include "WrapOption.h"
 #include "ArbitraryBounceOption.h"
 #include "Lerper.h"
+#include "Utilities.h"
 
 using Core::Input;
 
@@ -17,6 +18,8 @@ WrapOption wrap;
 BounceOption bounce;
 ArbitraryBounceOption arb;
 bool arbOn = false;
+Utilities util;
+
 
 bool Update(float dt);
 void Draw(Core::Graphics& graphics);
@@ -85,6 +88,10 @@ void Draw(Core::Graphics& graphics)
 	graphics.DrawString(0,0,"1 : Wrap");
 	graphics.DrawString(0,10,"2 : Bounce");
 	graphics.DrawString(0,20,"3 : Arbitrary Bounce");
+	graphics.DrawString(0,30,"Ship Position : ");
+	util.DrawValue(graphics,100,30,ship->GetPosition());
+	graphics.DrawString(0,40,"Ship Velocity : ");
+	util.DrawValue(graphics,100,40,ship->GetVelocity());
 	if(arbOn)
 	{
 		graphics.DrawLine(SCREEN_WIDTH/2,SCREEN_HEIGHT,SCREEN_WIDTH,SCREEN_HEIGHT/2);
