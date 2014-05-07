@@ -19,6 +19,7 @@ BounceOption bounce;
 ArbitraryBounceOption arb;
 bool arbOn = false;
 Utilities util;
+char* boundsType = "wrap";
 
 
 bool Update(float dt);
@@ -64,16 +65,19 @@ bool Update(float dt)
 	{
 		boundsOption = &wrap;
 		arbOn = false;
+		boundsType = "wrap";
 	}
 	if(Input::IsPressed('2'))
 	{
 		boundsOption = &bounce;
 		arbOn = false;
+		boundsType = "bounce";
 	}
 	if(Input::IsPressed('3'))
 	{
 		arbOn = true;
 		boundsOption = &arb;
+		boundsType = "arbitrary bounce";
 	}
 	lerp->Update(Vector2());
 	boundsOption->CheckBounds(ship,SCREEN_HEIGHT,SCREEN_WIDTH);
@@ -92,6 +96,8 @@ void Draw(Core::Graphics& graphics)
 	util.DrawValue(graphics,100,30,ship->GetPosition());
 	graphics.DrawString(0,40,"Ship Velocity : ");
 	util.DrawValue(graphics,100,40,ship->GetVelocity());
+	graphics.DrawString(0,50,"Bounds Option : ");
+	graphics.DrawString(100,50,boundsType);
 	if(arbOn)
 	{
 		graphics.DrawLine(SCREEN_WIDTH/2,SCREEN_HEIGHT,SCREEN_WIDTH,SCREEN_HEIGHT/2);
