@@ -40,6 +40,8 @@ public:
 	inline void ScaleX(float scale);
 	inline void ScaleY(float scale);
 	inline void Rotate(float rads);
+	inline void Translate(float translationX,float translationY);
+	inline void Translate(Vector2 translation);
 	inline void TranslateX(float translation);
 	inline void TranslateY(float translation);
 	operator float*(){return &values[0][0];}
@@ -49,6 +51,22 @@ Matrix3 inline operator*(const Matrix3& matrix, const Matrix3& vector);
 Vector3 inline operator*(const Vector3& vector,const Matrix3& matrix);
 Vector2 inline operator*(const Vector2& vector,const Matrix3& matrix);
 Matrix3 inline operator*(const Matrix3& left, const Matrix3& right);
+
+inline void Matrix3::Translate(float translationX,float translationY)
+{
+	Matrix3 trans;
+	trans.values[0][2] = translationX;
+	trans.values[1][2] = translationY;
+	*this = *this * trans;
+}
+
+inline void Matrix3::Translate(Vector2 translation)
+{
+	Matrix3 trans;
+	trans.values[0][2] = translation.x;
+	trans.values[1][2] = translation.y;
+	*this = *this * trans;
+}
 
 inline void Matrix3::TranslateX(float translation)
 {
