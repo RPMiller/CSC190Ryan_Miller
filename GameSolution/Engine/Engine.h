@@ -3,6 +3,9 @@
 
 #include "ExportHeader.h"
 #include "Vector2.h"
+#include "Matrix2.h"
+#include "Vector3.h"
+#include "Matrix3.h"
 
 namespace Engine
 {

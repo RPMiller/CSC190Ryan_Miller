@@ -1,6 +1,5 @@
 #ifndef VECTOR2H
 #define VECTOR2H
-#include<math.h>
 #include<iostream>
 
 struct Vector2
