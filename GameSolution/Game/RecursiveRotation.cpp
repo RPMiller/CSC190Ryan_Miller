@@ -9,6 +9,7 @@ RecursiveRotation::RecursiveRotation(int numRecurse,int recurseDistance,Vector2 
 
 	for(int i = 0; i < NUM_RECURSE; i++)
 	{
+		shapeSize += i * 2;
 		Vector2* lines = new Vector2[numVertecies];
 		Vector2 vertex1(shapeSize,shapeSize);
 		Vector2 vertex2(shapeSize,-shapeSize);
