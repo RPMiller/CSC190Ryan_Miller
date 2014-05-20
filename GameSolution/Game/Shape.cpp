@@ -1,7 +1,7 @@
 #include "Shape.h"
 
 
-Shape::Shape(Vector2* lines,int numOfLines,Vector2 position):lines(lines),numOfLines(numOfLines),position(position)
+Shape::Shape(Vector2* lines,int numOfLines,Matrix3 translationMatrix):lines(lines),numOfLines(numOfLines),translationMatrix(translationMatrix)
 {
 		float top = lines->y;
 		float bottom = top;
@@ -46,11 +46,11 @@ void Shape::DrawShape(Core::Graphics graphics)
 {
 	if(numOfLines > 1)
 	{
-		Vector2 previousLine = lines[0];
+		Vector2 previousLine = lines[0] * translationMatrix;
 		for(int i = 1; i < numOfLines ; i++)
 		{
-			Vector2 nextLine = lines[i];
-			graphics.DrawLine(previousLine.x + position.x,previousLine.y + position.y,nextLine.x + position.x,nextLine.y + position.y);
+			Vector2 nextLine = lines[i] * translationMatrix;
+			graphics.DrawLine(previousLine.x,previousLine.y,nextLine.x,nextLine.y);
 			previousLine = nextLine;
 		}
 	}
@@ -72,12 +72,17 @@ float Shape::GetWidth()
 	return width;
 }
 
-void Shape::SetPosition(Vector2 position)
+void Shape::SetTranslationMatrix(Matrix3 translationMatrix)
 {
-	Shape::position = position;
+	Shape::translationMatrix = translationMatrix;
 }
 
-Vector2 Shape::GetPosition()
+void Shape::SetPosition(Vector2 position)
 {
-	return position;
+	translationMatrix.Translate(position);
+}
+
+Matrix3 Shape::GetTranslationMatrix()
+{
+	return translationMatrix;
 }

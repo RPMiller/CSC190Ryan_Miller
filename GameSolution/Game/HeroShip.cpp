@@ -1,14 +1,13 @@
 #include "HeroShip.h"
 
-
-HeroShip::HeroShip(void)
+HeroShip::HeroShip()
 {
-}
 
+}
 
 HeroShip::~HeroShip(void)
 {
-	delete shapes;
+	//delete shapes;
 }
 
 void HeroShip::Init(Vector2 position)
@@ -16,19 +15,45 @@ void HeroShip::Init(Vector2 position)
 	HeroShip::position = position;
 
 	acceleration = 2;
-	const int numberOfLines = 7;
-	Vector2* lines = new Vector2[numberOfLines];
-	lines[0] = Vector2(0,-20);
-	lines[1] = Vector2(20,0);
-	lines[2] = Vector2(20,20);
-	lines[3] = Vector2(0,0);
-	lines[4] = Vector2(-20,20);
-	lines[5] = Vector2(-20,0);
-	lines[6] = Vector2(0,-20);
-	Shape shape = Shape(lines,numberOfLines,position);
+	const int numberOfShipLines = 7;
+	const float shipSize = 32;
+	Vector2* shipLines = new Vector2[numberOfShipLines];
+	shipLines[0] = Vector2(0,-shipSize);
+	shipLines[1] = Vector2(shipSize,0);
+	shipLines[2] = Vector2(shipSize,shipSize);
+	shipLines[3] = Vector2(0,shipSize / 2);
+	shipLines[4] = Vector2(-shipSize,shipSize);
+	shipLines[5] = Vector2(-shipSize,0);
+	shipLines[6] = Vector2(0,-shipSize);
+	Shape ship = Shape(shipLines,numberOfShipLines,translationMatrix);
+	turret.TransformToBasicTurret();
+
 	numberOfShapes = 1;
-	height = shape.GetHeight();
-	width = shape.GetWidth();
-	//Shape shipShapes[] = {shape};
-	shapes = new Shape(lines,numberOfLines,position);
+	height = ship.GetHeight();
+	width = ship.GetWidth();
+	shapes = new Shape[numberOfShapes];
+
+	shapes[0] = ship;
+}
+
+void HeroShip::Draw(Core::Graphics graphics)
+{/*
+	Matrix3 turretRotateMatrix;
+	turretRotateMatrix.Rotate(turretRadsRotate);
+	Matrix3 turretTranslate;
+	turretTranslate.TranslateY(-turretYOffSet);
+
+	translationMatrix.Translate(velocity);
+	Matrix3 drawMatrix;
+	drawMatrix.Rotate(radsRotated);
+	turret.SetTranslationMatrix(turretRotateMatrix * turretTranslate * drawMatrix * translationMatrix);*/
+	GameObject::Draw(graphics);
+	turret.SetPosition(position);
+	turret.Draw(graphics);
+	//turret.DrawShape(graphics);
+}
+
+void HeroShip::Fire()
+{
+	turret.Fire();
 }

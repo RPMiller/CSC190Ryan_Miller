@@ -93,7 +93,10 @@
     <ClCompile Include="HeroShip.cpp" />
     <ClCompile Include="Lerper.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Missile.cpp" />
+    <ClCompile Include="RecursiveRotation.cpp" />
     <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="Turret.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="WrapOption.cpp" />
   </ItemGroup>
@@ -104,7 +107,10 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HeroShip.h" />
     <ClInclude Include="Lerper.h" />
+    <ClInclude Include="Missile.h" />
+    <ClInclude Include="RecursiveRotation.h" />
     <ClInclude Include="Shape.h" />
+    <ClInclude Include="Turret.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="WrapOption.h" />
   </ItemGroup>

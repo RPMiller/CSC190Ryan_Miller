@@ -36,6 +36,22 @@ public:
 		values[1][2] = eighth;
 		values[2][2] = ninth;
 	}
+
+	Matrix3(Vector2 first, Vector2 second)
+	{
+		int lastIndex = size - 1;
+		for(int i = 0; i < lastIndex; i++)
+		{
+			values[i][lastIndex] = 0;
+			values[lastIndex][i] = 0;
+		}
+		values[lastIndex][lastIndex] = 1;
+		values[0][0] = first.x;
+		values[1][0] = second.x;
+		values[0][1] = first.y;
+		values[1][1] = second.y;
+	}
+
 	inline void Scale(float scale);
 	inline void ScaleX(float scale);
 	inline void ScaleY(float scale);
@@ -44,6 +60,10 @@ public:
 	inline void Translate(Vector2 translation);
 	inline void TranslateX(float translation);
 	inline void TranslateY(float translation);
+	inline float GetX();
+	inline float GetY();
+	inline Vector2 GetPosition();
+	inline void Matrix3::SetPosition(Vector2 position);
 	operator float*(){return &values[0][0];}
 };
 
@@ -165,4 +185,25 @@ Vector2 inline operator*(const Vector2& vector,const Matrix3& matrix)
 {
 	Vector3 result = matrix * Vector3(vector.x,vector.y,1);
 	return Vector2(result.x,result.y);
+}
+
+inline float Matrix3::GetX()
+{
+	return values[0][size - 1];
+}
+
+inline float Matrix3::GetY()
+{
+	return values[1][size - 1];
+}
+
+inline Vector2 Matrix3::GetPosition()
+{
+	return Vector2(GetX(),GetY());
+}
+
+inline void Matrix3::SetPosition(Vector2 position)
+{
+	values[0][size - 1] = position.x;
+	values[1][size - 1] = position.y;
 }

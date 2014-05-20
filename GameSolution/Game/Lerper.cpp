@@ -12,7 +12,7 @@ Lerper::~Lerper(void)
 
 void Lerper::Init(Vector2 position)
 {
-	Lerper::position = position;
+	Lerper::translationMatrix.Translate(position);
 
 	acceleration = 2;
 	const int numberOfLines = 5;
@@ -22,12 +22,12 @@ void Lerper::Init(Vector2 position)
 	lines[2] = Vector2(0,20);
 	lines[3] = Vector2(-20,20);
 	lines[4] = Vector2(0,-20);
-	Shape shape = Shape(lines,numberOfLines,position);
+	Shape shape = Shape(lines,numberOfLines,translationMatrix);
 	numberOfShapes = 1;
 	height = shape.GetHeight();
 	width = shape.GetWidth();
 	//Shape shipShapes[] = {shape};
-	shapes = new Shape(lines,numberOfLines,position);
+	shapes = new Shape(lines,numberOfLines,translationMatrix);
 
 	currentWayPointIndex = 0;
 	const int numberOfWayPoints = 4;
@@ -42,7 +42,7 @@ void Lerper::Update(Vector2 accelerationVector)
 {
 	accelerationVector = Vector2();
 	Vector2 currentPoint = wayPoints[currentWayPointIndex];
-	Vector2 differenceVector = currentPoint - position;
+	Vector2 differenceVector = currentPoint - translationMatrix.GetPosition();
 	velocity = Normalized(differenceVector) * 2;
 	if(Length(differenceVector) < 2)
 	{

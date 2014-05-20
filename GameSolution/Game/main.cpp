@@ -6,12 +6,13 @@
 #include "ArbitraryBounceOption.h"
 #include "Lerper.h"
 #include "Utilities.h"
+#include "RecursiveRotation.h"
 
 using Core::Input;
 
 const float SCREEN_WIDTH = 1024;
 const float SCREEN_HEIGHT = 768;
-GameObject* ship;
+HeroShip* ship;
 GameObject* lerp;
 BoundsOption* boundsOption;
 WrapOption wrap;
@@ -20,6 +21,7 @@ ArbitraryBounceOption arb;
 bool arbOn = false;
 Utilities util;
 char* boundsType = "wrap";
+RecursiveRotation* recurse;
 
 
 bool Update(float dt);
@@ -34,6 +36,7 @@ int main()
 	Lerper lerper;
 	lerper.Init(Vector2(SCREEN_WIDTH/2,SCREEN_HEIGHT/2));
 	lerp = &lerper;
+	recurse = new RecursiveRotation(4,30,Vector2(120,350));
 	Core::Init("Game Demo",(int)SCREEN_WIDTH,(int)SCREEN_HEIGHT);
 	Core::RegisterUpdateFn(Update);
 	Core::RegisterDrawFn(Draw);
@@ -43,8 +46,9 @@ int main()
 bool Update(float dt)
 {
 	const float BASE_SPEED = 6;
-	float x = 0;
+	const float ROTATE_SPEED = .1f;
 	float y = 0;
+	float rotate = 0;
 	if(Input::IsPressed('W') || Input::IsPressed(Input::KEY_UP))
 	{
 		y = -BASE_SPEED;
@@ -55,11 +59,11 @@ bool Update(float dt)
 	}
 	if(Input::IsPressed('A') || Input::IsPressed(Input::KEY_LEFT))
 	{
-		x = -BASE_SPEED;
+		rotate = ROTATE_SPEED;
 	}
 	if(Input::IsPressed('D') || Input::IsPressed(Input::KEY_RIGHT))
 	{
-		x = BASE_SPEED;
+		rotate = -ROTATE_SPEED;
 	}
 	if(Input::IsPressed('1'))
 	{
@@ -79,9 +83,14 @@ bool Update(float dt)
 		boundsOption = &arb;
 		boundsType = "arbitrary bounce";
 	}
+	if(Input::IsPressed(32))
+	{
+		ship->Fire();
+	}
 	lerp->Update(Vector2());
 	boundsOption->CheckBounds(ship,SCREEN_HEIGHT,SCREEN_WIDTH);
-	ship->Update(Vector2(x,y) * dt);
+	ship->Rotate(rotate);
+	ship->Update(Vector2(0,y) * dt);
 	return Input::IsPressed(Input::KEY_ESCAPE);
 }
 
@@ -89,15 +98,22 @@ void Draw(Core::Graphics& graphics)
 {
 	lerp->Draw(graphics);
 	ship->Draw(graphics);
+	recurse->Rotate(.05f,graphics);
 	graphics.DrawString(0,0,"1 : Wrap");
 	graphics.DrawString(0,10,"2 : Bounce");
 	graphics.DrawString(0,20,"3 : Arbitrary Bounce");
-	graphics.DrawString(0,30,"Ship Position : ");
-	util.DrawValue(graphics,100,30,ship->GetPosition());
-	graphics.DrawString(0,40,"Ship Velocity : ");
-	util.DrawValue(graphics,100,40,ship->GetVelocity());
-	graphics.DrawString(0,50,"Bounds Option : ");
-	graphics.DrawString(100,50,boundsType);
+	graphics.DrawString(0,30,"W/Up : Increase Velocity In Forward Direction");
+	graphics.DrawString(0,40,"S/Down : Increase Velocity In Backward Direction");
+	graphics.DrawString(0,50,"A/Left : Rotate Left");
+	graphics.DrawString(0,60,"D/Right : Rotate Right");
+	graphics.DrawString(0,70,"Space : Fire Missile");
+	graphics.DrawString(0,80,"Ship Position : ");
+	util.DrawValue(graphics,100,80,ship->GetPosition());
+	graphics.DrawString(0,90,"Ship Velocity : ");
+	util.DrawValue(graphics,100,90,ship->GetVelocity());
+	graphics.DrawString(0,100,"Bounds Option : ");
+	graphics.DrawString(100,100,boundsType);
+	util.DrawValue(graphics,0,110,ship->GetTranslationMatrix());
 	if(arbOn)
 	{
 		graphics.DrawLine(SCREEN_WIDTH/2,SCREEN_HEIGHT,SCREEN_WIDTH,SCREEN_HEIGHT/2);
