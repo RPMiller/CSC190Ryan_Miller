@@ -13,6 +13,8 @@ HeroShip::~HeroShip(void)
 void HeroShip::Init(Vector2 position)
 {
 	HeroShip::position = position;
+	fountain = new FountainParticleEffect(500,Vector2(position.x,position.y + 17));
+	fountain->Init();
 
 	acceleration = 2;
 	const int numberOfShipLines = 7;
@@ -37,23 +39,43 @@ void HeroShip::Init(Vector2 position)
 }
 
 void HeroShip::Draw(Core::Graphics graphics)
-{/*
-	Matrix3 turretRotateMatrix;
-	turretRotateMatrix.Rotate(turretRadsRotate);
-	Matrix3 turretTranslate;
-	turretTranslate.TranslateY(-turretYOffSet);
-
-	translationMatrix.Translate(velocity);
-	Matrix3 drawMatrix;
-	drawMatrix.Rotate(radsRotated);
-	turret.SetTranslationMatrix(turretRotateMatrix * turretTranslate * drawMatrix * translationMatrix);*/
+{
 	GameObject::Draw(graphics);
 	turret.SetPosition(position);
 	turret.Draw(graphics);
-	//turret.DrawShape(graphics);
+}
+
+void HeroShip::Update(Vector2 accelerationVector,float dt)
+{
+	GameObject::Update(accelerationVector,dt);
+	turret.Update(dt);
+	UpdateFountain();
+}
+	
+void HeroShip::Update(float dt)
+{
+	GameObject::Update(dt);
+	turret.Update(dt);
+	UpdateFountain();
 }
 
 void HeroShip::Fire()
 {
 	turret.Fire();
+}
+
+FountainParticleEffect* HeroShip::GetFountainParticleEffect()
+{
+	return fountain;
+}
+
+void HeroShip::UpdateFountain()
+{
+	Vector2 down(0,1);
+	Vector2 fountainOffSet(0 , 17);
+	Vector2 fountainOrigin(Vector2(position.x,position.y));
+	Matrix3 rotation;
+	rotation.Rotate(radsRotated);
+	fountain->SetOrigin(fountainOffSet * rotation + fountainOrigin);
+	fountain->SetDirection(down * rotation);
 }

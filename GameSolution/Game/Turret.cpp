@@ -8,8 +8,9 @@ Turret::Turret()
 
 void Turret::TransformToBasicTurret()
 {
-	missiles = new Missile*[20];
-	for(int i = 0; i < sizeof(missiles) / sizeof(*missiles);i++)
+	numberOfMissiles = 20;
+	missiles = new Missile*[numberOfMissiles];
+	for(int i = 0; i < numberOfMissiles;i++)
 	{
 		missiles[i] = 0;
 	}
@@ -26,6 +27,8 @@ void Turret::TransformToBasicTurret()
 	numberOfShapes = 1;
 	shapes = new Shape[numberOfShapes];
 	shapes[0] = Shape(turretLines,numberOfTurretLines,translationMatrix);
+	baseReloadTime = .5;
+	reloadTimeLeft = baseReloadTime;
 
 	/*height = ship.GetHeight();
 	width = ship.GetWidth();
@@ -63,7 +66,7 @@ void Turret::Draw(Core::Graphics graphics)
 		(shapes + i)->SetTranslationMatrix(translationMatrix);
 		(shapes + i)->DrawShape(graphics);
 	}
-	for(int i = 0; i < sizeof(missiles) / sizeof(*missiles);i++)
+	for(int i = 0; i < numberOfMissiles;i++)
 	{
 		Missile* next = missiles[i];
 		if(next == 0)
@@ -88,16 +91,45 @@ void Turret::Draw(Core::Graphics graphics)
 	//util.DrawValue(graphics,0,600,rotationMatrix);
 }
 
-void Turret::Fire()
+void Turret::Update(float dt)
 {
-	Vector2 baseVelocity(0,-3);
-	bool missileReady = true;
-	for(int i = 0; i < sizeof(missiles) / sizeof(*missiles) && missileReady;i++)
+	GameObject::Update(dt);
+	reloadTimeLeft -= dt;
+
+	for(int i = 0; i < numberOfMissiles;i++)
 	{
 		Missile* next = missiles[i];
 		if(next == 0)
 		{
-			missiles[i] = new Missile(position,baseVelocity * rotationMatrix);
+
+		}
+		else
+		{
+			if(next->CheckDead())
+			{
+				delete(next);
+				missiles[i] = 0;
+			}
+			else
+			{
+				next->Update(dt);
+			}
+		}
+	}
+}
+
+void Turret::Fire()
+{
+	Vector2 baseVelocity(0,-200);
+	bool missileReady = true;
+	for(int i = 0; reloadTimeLeft <= 0 && i < numberOfMissiles && missileReady;i++)
+	{
+		Missile* next = missiles[i];
+		if(next == 0)
+		{
+ 			missiles[i] = new Missile(position,baseVelocity * rotationMatrix);
+			missileReady = false;
+			reloadTimeLeft = baseReloadTime;
 		}
 	}
 }

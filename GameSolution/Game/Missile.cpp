@@ -3,7 +3,7 @@
 
 Missile::Missile(Vector2 position,Vector2 velocity)
 {
-	ticksOfLife = 80;
+	ticksOfLife = 7;
 	SetPosition(position);
 	SetVelocity(velocity);
 	numberOfShapes = 1;
@@ -36,6 +36,11 @@ bool Missile::CheckDead()
 
 void Missile::Draw(Core::Graphics graphics)
 {
-	ticksOfLife--;
 	GameObject::Draw(graphics);
+}
+
+void Missile::Update(float dt)
+{
+	GameObject::Update(dt);
+	ticksOfLife -= dt;
 }
