@@ -11,6 +11,7 @@ GameObject::GameObject()
 
 GameObject::~GameObject(void)
 {
+	//delete[] shapes;
 }
 
 Matrix3 GameObject::GetTranslationMatrix()

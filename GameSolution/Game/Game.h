@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Engine.h"
 #include "Core.h"
 #include "HeroShip.h"
@@ -11,6 +12,13 @@
 #include "ParticleEffectManager.h"
 #include "ExplosionParticleEffect.h"
 #include "FountainParticleEffect.h"
+#include "EnemyManager.h"
+
+#ifdef DEBUG
+#include "Profiler.h"
+#endif
+
+#include "Timer.h"
 
 using Core::Input;
 class Game
@@ -28,6 +36,13 @@ class Game
 	char* boundsType;
 	RecursiveRotation* recurse;
 	ParticleEffectManager effectManager;
+	EnemyManager enemyManger;
+
+#ifdef DEBUG
+	Profiler profiler;
+#endif
+	Timer timer;
+	Timer drawTimer;
 
 public:
 	Game(float ScreenWidth,float ScreenHeight);

@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 Game::Game(float ScreenWidth,float ScreenHeight) : SCREEN_HEIGHT(ScreenHeight), SCREEN_WIDTH(ScreenWidth)
 {
 	arbOn = false;
@@ -26,7 +25,11 @@ Game::~Game(void)
 
 void Game::Update(float dt)
 {
-	const float BASE_SPEED = 6;
+#ifdef DEBUG
+	profiler.NewFrame();
+#endif
+	timer.Start();
+	const float BASE_SPEED = 1;
 	const float ROTATE_SPEED = .1f;
 	float y = 0;
 	float rotate = 0;
@@ -73,13 +76,34 @@ void Game::Update(float dt)
 	ship->Rotate(rotate);
 	ship->Update(Vector2(0,y), dt);
 	effectManager.Update(dt);
+	enemyManger.UpdateEnemies(ship,&effectManager,dt);
+#ifdef DEBUG
+	profiler.AddEntry("Updated Full Game",timer.Stop());
+#endif
 }
 
 void Game::Draw(Core::Graphics& graphics)
 {
+	float secondsPerFrame = timer.Interval(); 
+	float framesPerSecond = 1 / secondsPerFrame;
+	float lerpTicks;
+	float heroTicks;
+	float recurseTicks;
+	float effectTicks;
+
+	timer.Start();
+	drawTimer.Start();
 	lerp->Draw(graphics);
+	lerpTicks = drawTimer.Stop();
+
+	drawTimer.Start();
 	ship->Draw(graphics);
+	heroTicks= drawTimer.Stop();
+
+	drawTimer.Start();
 	recurse->Rotate(.05f,graphics);
+	recurseTicks= drawTimer.Stop();
+
 	graphics.DrawString(0,0,"1 : Wrap");
 	graphics.DrawString(0,10,"2 : Bounce");
 	graphics.DrawString(0,20,"3 : Arbitrary Bounce");
@@ -95,6 +119,11 @@ void Game::Draw(Core::Graphics& graphics)
 	graphics.DrawString(0,100,"Bounds Option : ");
 	graphics.DrawString(100,100,boundsType);
 	util.DrawValue(graphics,0,110,ship->GetTranslationMatrix());
+	graphics.DrawString(0,170,"Seconds Per Frame:");
+	util.DrawValue(graphics,130,170,secondsPerFrame);
+	graphics.DrawString(0,180,"Frames Per Second:");
+	util.DrawValue(graphics,130,180,framesPerSecond);
+
 	if(arbOn)
 	{
 		graphics.DrawLine(SCREEN_WIDTH/2,SCREEN_HEIGHT,SCREEN_WIDTH,SCREEN_HEIGHT/2);
@@ -102,7 +131,20 @@ void Game::Draw(Core::Graphics& graphics)
 		graphics.DrawLine(SCREEN_WIDTH/2,0,0,SCREEN_HEIGHT/2);
 		graphics.DrawLine(0,SCREEN_HEIGHT/2,SCREEN_WIDTH/2,SCREEN_HEIGHT);
 	}
+
+	drawTimer.Start();
 	effectManager.Draw(graphics);
+	effectTicks= drawTimer.Stop();
+	enemyManger.DrawEnemies(graphics);
+
+#ifdef DEBUG
+	profiler.AddEntry("Drew Game",timer.Stop());
+	profiler.AddEntry("FPS",framesPerSecond);
+	profiler.AddEntry("Drew Lerp",lerpTicks);
+	profiler.AddEntry("Drew Hero",heroTicks);
+	profiler.AddEntry("Drew Recurse",recurseTicks);
+	profiler.AddEntry("Drew Effects",effectTicks);
+#endif
 }
 
 float Game::GetHeight()

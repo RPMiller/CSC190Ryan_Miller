@@ -16,7 +16,7 @@ void HeroShip::Init(Vector2 position)
 	fountain = new FountainParticleEffect(500,Vector2(position.x,position.y + 17));
 	fountain->Init();
 
-	acceleration = 2;
+	acceleration = 12;
 	const int numberOfShipLines = 7;
 	const float shipSize = 32;
 	Vector2* shipLines = new Vector2[numberOfShipLines];

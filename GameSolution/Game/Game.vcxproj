@@ -91,6 +91,8 @@
     <ClCompile Include="BoundsOption.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="DotParticle.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="ExplosionParticleEffect.cpp" />
     <ClCompile Include="FountainParticleEffect.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -102,10 +104,12 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleEffect.cpp" />
     <ClCompile Include="ParticleEffectManager.cpp" />
+    <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />
     <ClCompile Include="RecursiveRotation.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="SquareParticle.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="WrapOption.cpp" />
@@ -116,6 +120,8 @@
     <ClInclude Include="BoundsOption.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="DotParticle.h" />
+    <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="ExplosionParticleEffect.h" />
     <ClInclude Include="FountainParticleEffect.h" />
     <ClInclude Include="Game.h" />
@@ -126,10 +132,12 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleEffect.h" />
     <ClInclude Include="ParticleEffectManager.h" />
+    <ClInclude Include="Profiler.h" />
     <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="RecursiveRotation.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="SquareParticle.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="WrapOption.h" />

@@ -19,5 +19,7 @@ public:
 	void Update(float dt);
 	void SetShipRotationMatrix(Matrix3 rotation);
 	void Fire();
+	Missile** GetMissiles();
+	int GetNumberOfMissiles();
 };
 

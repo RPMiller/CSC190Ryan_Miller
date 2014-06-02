@@ -133,3 +133,13 @@ void Turret::Fire()
 		}
 	}
 }
+
+Missile** Turret::GetMissiles()
+{
+	return missiles;
+}
+
+int Turret::GetNumberOfMissiles()
+{
+	return numberOfMissiles;
+}

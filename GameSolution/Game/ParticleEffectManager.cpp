@@ -26,6 +26,7 @@ void ParticleEffectManager::Update(float dt)
 	for(ParticleEffect* effect : effectsToRemove)
 	{
 		effects.erase(std::find(effects.begin(), effects.end(), effect));
+		delete effect;
 	}
 }
 	

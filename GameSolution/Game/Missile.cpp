@@ -21,7 +21,10 @@ Missile::Missile(Vector2 position,Vector2 velocity)
 	lines[2] = vertex3;
 	lines[3] = vertex1;
 
-	shapes[0] = Shape(lines,NUMBER_LINES,Matrix3());
+	Shape missile = Shape(lines,NUMBER_LINES,Matrix3());
+	shapes[0] = missile;
+	height = missile.GetHeight();
+	width = missile.GetWidth();
 }
 
 
