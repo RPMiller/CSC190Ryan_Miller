@@ -45,7 +45,7 @@ void Draw(Core::Graphics& graphics);
 int main()
 {
 #pragma warning(disable : 4127)
-	ASSERT(true,"test");
+	ASSERT(false,"test");
 #pragma warning(default : 4127)
 	game = new IntroScreen();
 	game->SetScore(0);
