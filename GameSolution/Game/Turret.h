@@ -5,21 +5,24 @@
 
 class Turret : public GameObject
 {
-	Matrix3 rotationMatrix;
+protected :
+	Matrix4 rotationMatrix;
 	Missile** missiles;
+	Vector3 baseMissileVelocity;
 	float reloadTimeLeft;
 	float baseReloadTime;
 	int numberOfMissiles;
+
 public:
 	Turret();
 	~Turret(void);
-	void TransformToBasicTurret();
 	void UpdateTurretRotation();
 	void Draw(Core::Graphics graphics);
 	void Update(float dt);
-	void SetShipRotationMatrix(Matrix3 rotation);
+	void SetShipRotationMatrix(Matrix4 rotation);
 	void Fire();
 	Missile** GetMissiles();
 	int GetNumberOfMissiles();
+	void SetBaseMissileVelocity(Vector3 velocity);
 };
 

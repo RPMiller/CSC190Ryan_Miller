@@ -10,55 +10,63 @@ EnemyShip::~EnemyShip(void)
 {
 }
 
-void EnemyShip::Init(Vector2 position)
+void EnemyShip::Init(Vector3 position)
 {
 	EnemyShip::position = position;
+	color = Color(150,20,20);
 
-	acceleration = 10.0f;
-	const int numberOfShipLines = 8;
+	acceleration = 8000.0f;
 	const float shipSize = 26;
-	Vector2* shipLines = new Vector2[numberOfShipLines];
-	shipLines[0] = Vector2(0,-shipSize);
-	shipLines[1] = Vector2(shipSize,0);
-	shipLines[2] = Vector2(shipSize/2,0);
-	shipLines[3] = Vector2(shipSize,shipSize);
-	shipLines[4] = Vector2(-shipSize,shipSize);
-	shipLines[5] = Vector2(-shipSize/2,0);
-	shipLines[6] = Vector2(-shipSize,0);
-	shipLines[7] = Vector2(0,-shipSize);
-	Shape ship = Shape(shipLines,numberOfShipLines,translationMatrix);
+	numberOfShapes = ShapeBuilder::CUBE_SHAPES_NUMBER;
+	shapes = new Shape[ShapeBuilder::CUBE_SHAPES_NUMBER];
 
-	numberOfShapes = 1;
-	height = ship.GetHeight();
-	width = ship.GetWidth();
-	shapes = new Shape[numberOfShapes];
-
-	shapes[0] = ship;
-}
-
-bool EnemyShip::CheckCollision(Missile missile)
-{
-	Vector2 distance = position - missile.GetPosition();
-	float misslieRadius = (missile.GetHeight() + missile.GetWidth()) / 2;
-	float enemyRadius = (GetHeight() + GetWidth()) / 2;
-	bool collided = Length(distance) <= misslieRadius + enemyRadius;
-	if(collided)
-	{
-		isAlive = false;
-	}
-	return collided;
+	ShapeBuilder::BuildCube(shipSize,shapes,0);
+	height = GetHeight();
+	width = GetWidth();
+	depth = GetDepth();
 }
 	
 ExplosionParticleEffect* EnemyShip::ExplodeObject()
 {
-	ExplosionParticleEffect* explosion = new ExplosionParticleEffect(200,position);
+	ExplosionParticleEffect* explosion = new ExplosionParticleEffect(100,position);
 	explosion->Init();
 	return explosion;
 }
 	
-void EnemyShip::FollowHero(Vector2 heroPosition, float dt)
+void EnemyShip::FollowHero(Vector3 heroPosition, float dt)
 {
-	Vector2 toHero = Normalized(heroPosition - position);
-	velocity = velocity + toHero *( dt * acceleration);
+	const float BASE_SPEED = 1000;
+	turret.SetBaseMissileVelocity(Normalized(heroPosition - position) * BASE_SPEED);
+	turret.Fire();
+	turret.Update(dt);
+
+	Vector3 toHero = Normalized(heroPosition - position);
+	velocity = Normalized(velocity + toHero) *( dt * acceleration);
+	const float maxZ = -60;
+	if(velocity.z < maxZ)
+	{
+		velocity.z = maxZ;
+	}
+	if(position.z < 0)
+	{
+		isAlive = false;
+	}
 	GameObject::Update(dt);
+}
+
+void EnemyShip::Draw(Core::Graphics graphics)
+{
+	turret.SetPosition(position);
+	turret.Draw(graphics);
+	GameObject::Draw(graphics);
+}
+
+Missile** EnemyShip::GetMissiles()
+{
+	return turret.GetMissiles();
+}
+	
+int EnemyShip::GetTotalMissileNumber()
+{
+	return turret.GetNumberOfMissiles();
 }

@@ -1,26 +1,29 @@
 #pragma once
-#include<Vector2.h>
+#include<Vector3.h>
 #include<Core.h>
-#include "Matrix3.h"
+#include "Matrix4.h"
+#include "MyMathUtil.h"
 
 class Shape
 {
-	const Vector2* lines;
-	Matrix3 translationMatrix;
+protected:
+	Vector3* lines;
+	Matrix4 translationMatrix;
 	int numOfLines;
-	float width;
-	float height;
+	float width, height, depth;
+	MyMathUtil mathUtil;
 public:
-	Shape(Vector2* lines,int numOfLines,Matrix3 translationMatrix);
+	Shape(Vector3* lines,int numOfLines,Matrix4 translationMatrix);
 	Shape(){}
 	~Shape();
-	void DrawShape(Core::Graphics graphics);
+	void DrawShape(Core::Graphics graphics,Vector3 center);
 	void UpdateShape(Core::Graphics graphics,int x, int y,float dt);
 	float GetWidth();
 	float GetHeight();
+	float GetDepth();
 	operator float*(){return translationMatrix;}
-	void SetTranslationMatrix(Matrix3 translationMatrix);
-	void SetPosition(Vector2 position);
-	Matrix3 GetTranslationMatrix();
+	void SetTranslationMatrix(Matrix4 translationMatrix);
+	void SetPosition(Vector3 position);
+	Matrix4 GetTranslationMatrix();
 };
 

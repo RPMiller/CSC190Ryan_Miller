@@ -13,6 +13,11 @@
 #include "ExplosionParticleEffect.h"
 #include "FountainParticleEffect.h"
 #include "EnemyManager.h"
+#include "Logger.h"
+#include "Screen.h"
+#include "VictoryScreen.h"
+#include "DefeatScreen.h"
+#include "ScreenConstants.h"
 
 #ifdef DEBUG
 #include "Profiler.h"
@@ -21,12 +26,10 @@
 #include "Timer.h"
 
 using Core::Input;
-class Game
+class Game : public Screen
 {
-	const float SCREEN_WIDTH;
-	const float SCREEN_HEIGHT;
 	HeroShip* ship;
-	GameObject* lerp;
+	//GameObject* lerp;
 	BoundsOption* boundsOption;
 	WrapOption wrap;
 	BounceOption bounce;
@@ -34,23 +37,30 @@ class Game
 	bool arbOn;
 	Utilities util;
 	char* boundsType;
-	RecursiveRotation* recurse;
+	//RecursiveRotation* recurse;
 	ParticleEffectManager effectManager;
 	EnemyManager enemyManger;
+	float score;
 
 #ifdef DEBUG
 	Profiler profiler;
 #endif
 	Timer timer;
 	Timer drawTimer;
+	void DrawInfo(Core::Graphics graphics,float framesPerSecond,float secondsPerFrame);
 
 public:
-	Game(float ScreenWidth,float ScreenHeight);
+	Game();
 	~Game(void);
 	void Draw(Core::Graphics& graphics);
-	void Update(float dt);
+	bool Update(float dt);
+	Screen* GetNextScreen();
 	float GetHeight();
 	float GetWidth();
+
+
+
+
 	Game& operator=(const Game &tmp);
 };
 

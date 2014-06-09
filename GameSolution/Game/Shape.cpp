@@ -1,7 +1,7 @@
 #include "Shape.h"
 
 
-Shape::Shape(Vector2* lines,int numOfLines,Matrix3 translationMatrix):lines(lines),numOfLines(numOfLines),translationMatrix(translationMatrix)
+Shape::Shape(Vector3* lines,int numOfLines,Matrix4 translationMatrix):lines(lines),numOfLines(numOfLines),translationMatrix(translationMatrix)
 {
 		float top = lines->y;
 		float bottom = top;
@@ -34,6 +34,22 @@ Shape::Shape(Vector2* lines,int numOfLines,Matrix3 translationMatrix):lines(line
 			}
 			width = right - left;
 		}
+
+		float back = lines->z;
+		float front = back;
+		for(int i = 1; i < numOfLines; i++)
+		{
+			float nextZ = (lines + i)->z;
+			if(nextZ > back)
+			{
+				back = nextZ;
+			}
+			else if(nextZ < front)
+			{
+				front = nextZ;
+			}
+			depth = back - front;
+		}
 }
 
 
@@ -42,14 +58,16 @@ Shape::~Shape()
 	//delete[] lines;
 }
 
-void Shape::DrawShape(Core::Graphics graphics)
+void Shape::DrawShape(Core::Graphics graphics,Vector3 center)
 {
+	center;
 	if(numOfLines > 1)
 	{
-		Vector2 previousLine = lines[0] * translationMatrix;
+		Vector2 previousLine = mathUtil.TranslateTo2D(lines[0] * translationMatrix);
+		
 		for(int i = 1; i < numOfLines ; i++)
 		{
-			Vector2 nextLine = lines[i] * translationMatrix;
+			Vector2 nextLine = mathUtil.TranslateTo2D(lines[i] * translationMatrix);
 			graphics.DrawLine(previousLine.x,previousLine.y,nextLine.x,nextLine.y);
 			previousLine = nextLine;
 		}
@@ -58,7 +76,7 @@ void Shape::DrawShape(Core::Graphics graphics)
 
 void Shape::UpdateShape(Core::Graphics graphics,int x, int y,float dt)
 {
-	dt = 2000;
+	dt;
 	graphics.DrawString(x,y,"add");
 }
 
@@ -72,17 +90,22 @@ float Shape::GetWidth()
 	return width;
 }
 
-void Shape::SetTranslationMatrix(Matrix3 translationMatrix)
+float Shape::GetDepth()
+{
+	return depth;
+}
+
+void Shape::SetTranslationMatrix(Matrix4 translationMatrix)
 {
 	Shape::translationMatrix = translationMatrix;
 }
 
-void Shape::SetPosition(Vector2 position)
+void Shape::SetPosition(Vector3 position)
 {
 	translationMatrix.Translate(position);
 }
 
-Matrix3 Shape::GetTranslationMatrix()
+Matrix4 Shape::GetTranslationMatrix()
 {
 	return translationMatrix;
 }

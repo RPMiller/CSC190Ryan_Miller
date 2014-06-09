@@ -1,21 +1,41 @@
 #include "Game.h"
 
-Game::Game(float ScreenWidth,float ScreenHeight) : SCREEN_HEIGHT(ScreenHeight), SCREEN_WIDTH(ScreenWidth)
+Game::Game()
 {
 	arbOn = false;
-	boundsType = "wrap";
-	boundsOption = &wrap;
+	boundsType = "bounce";
+	boundsOption = &bounce;
 	HeroShip* heroShip = new HeroShip();
-	heroShip->Init(Vector2(SCREEN_WIDTH/2,SCREEN_HEIGHT/2));
+	heroShip->Init(Vector3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0));
 	ship = heroShip;
-	Lerper* lerper = new Lerper();
-	lerper->Init(Vector2(SCREEN_WIDTH/2,SCREEN_HEIGHT/2));
-	lerp = lerper;
-	recurse = new RecursiveRotation(4,30,Vector2(120,350));
-	ExplosionParticleEffect* explosion = new ExplosionParticleEffect(100,Vector2(500,500));
-	explosion->Init();
+	//Lerper* lerper = new Lerper();
+	//lerper->Init(Vector2(SCREEN_WIDTH/2,SCREEN_HEIGHT/2));
+	//lerp = lerper;
+	//recurse = new RecursiveRotation(4,30,Vector2(120,350));
 	effectManager.AddEffect(ship->GetFountainParticleEffect());
-	effectManager.AddEffect(explosion);
+	score = 1000;
+
+	const int SIZE = 10;
+	Vector3 fountainDirection(0,0,-50);
+	float xPortionWidth = SCREEN_WIDTH / SIZE;
+	float yPortionHeight = SCREEN_HEIGHT / SIZE;
+
+	for(int i = 0; i < SIZE; i++)
+	{
+
+		for(int j = 0; j < SIZE; j++)
+		{
+			float x = xPortionWidth * j;
+			float y = yPortionHeight * i;
+
+			FountainParticleEffect* fountain = new FountainParticleEffect(5,Vector3(x,y,0));
+			fountain->Init();
+			fountain->SetRange(0);
+			fountain->SetDirection(fountainDirection);
+			fountain->SetColor(Color(255,255,0));
+			effectManager.AddEffect(fountain);
+		}
+	}
 }
 
 
@@ -23,12 +43,13 @@ Game::~Game(void)
 {
 }
 
-void Game::Update(float dt)
+bool Game::Update(float dt)
 {
 #ifdef DEBUG
 	profiler.NewFrame();
 #endif
 	timer.Start();
+	score -= dt;
 	const float BASE_SPEED = 1;
 	const float ROTATE_SPEED = .1f;
 	float y = 0;
@@ -71,15 +92,18 @@ void Game::Update(float dt)
 	{
 		ship->Fire();
 	}
-	lerp->Update(Vector2(),dt);
+	//lerp->Update(Vector2(),dt);
 	boundsOption->CheckBounds(ship,SCREEN_HEIGHT,SCREEN_WIDTH);
-	ship->Rotate(rotate);
-	ship->Update(Vector2(0,y), dt);
+	ship->RotateAroundZ(rotate);
+	ship->Update(Vector3(0,y,0), dt);
 	effectManager.Update(dt);
-	enemyManger.UpdateEnemies(ship,&effectManager,dt);
+	bool isGameOver = enemyManger.UpdateEnemies(ship,&effectManager,dt);
+
 #ifdef DEBUG
 	profiler.AddEntry("Updated Full Game",timer.Stop());
 #endif
+
+	return isGameOver;
 }
 
 void Game::Draw(Core::Graphics& graphics)
@@ -93,7 +117,7 @@ void Game::Draw(Core::Graphics& graphics)
 
 	timer.Start();
 	drawTimer.Start();
-	lerp->Draw(graphics);
+	//lerp->Draw(graphics);
 	lerpTicks = drawTimer.Stop();
 
 	drawTimer.Start();
@@ -101,28 +125,10 @@ void Game::Draw(Core::Graphics& graphics)
 	heroTicks= drawTimer.Stop();
 
 	drawTimer.Start();
-	recurse->Rotate(.05f,graphics);
+	//recurse->Rotate(.05f,graphics);
 	recurseTicks= drawTimer.Stop();
 
-	graphics.DrawString(0,0,"1 : Wrap");
-	graphics.DrawString(0,10,"2 : Bounce");
-	graphics.DrawString(0,20,"3 : Arbitrary Bounce");
-	graphics.DrawString(0,30,"W/Up : Increase Velocity In Forward Direction");
-	graphics.DrawString(0,40,"S/Down : Increase Velocity In Backward Direction");
-	graphics.DrawString(0,50,"A/Left : Rotate Left");
-	graphics.DrawString(0,60,"D/Right : Rotate Right");
-	graphics.DrawString(0,70,"Space : Fire Missile");
-	graphics.DrawString(0,80,"Ship Position : ");
-	util.DrawValue(graphics,100,80,ship->GetPosition());
-	graphics.DrawString(0,90,"Ship Velocity : ");
-	util.DrawValue(graphics,100,90,ship->GetVelocity());
-	graphics.DrawString(0,100,"Bounds Option : ");
-	graphics.DrawString(100,100,boundsType);
-	util.DrawValue(graphics,0,110,ship->GetTranslationMatrix());
-	graphics.DrawString(0,170,"Seconds Per Frame:");
-	util.DrawValue(graphics,130,170,secondsPerFrame);
-	graphics.DrawString(0,180,"Frames Per Second:");
-	util.DrawValue(graphics,130,180,framesPerSecond);
+	DrawInfo(graphics, framesPerSecond, secondsPerFrame);
 
 	if(arbOn)
 	{
@@ -147,6 +153,54 @@ void Game::Draw(Core::Graphics& graphics)
 #endif
 }
 
+void Game::DrawInfo(Core::Graphics graphics,float framesPerSecond,float secondsPerFrame)
+{
+	int yDrawPosition = 0;
+
+#ifdef DEBUG
+	graphics.DrawString(0,yDrawPosition,"1 : Wrap");
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"2 : Bounce");
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"3 : Arbitrary Bounce");
+	yDrawPosition += 10;
+#endif
+	graphics.DrawString(0,yDrawPosition,"W/Up : Increase Velocity In The Up Direction");
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"S/Down : Increase Velocity In The Down Direction");
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"A/Left : Rotate Left");
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"D/Right : Rotate Right");
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"Space : Fire Missile");
+	yDrawPosition += 10;
+#ifdef DEBUG
+	graphics.DrawString(0,yDrawPosition,"Ship Position : ");
+	util.DrawValue(graphics,100,yDrawPosition,ship->GetPosition());
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"Ship Velocity : ");
+	util.DrawValue(graphics,100,yDrawPosition,ship->GetVelocity());
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"Bounds Option : ");
+	graphics.DrawString(100,yDrawPosition,boundsType);
+	yDrawPosition += 10;
+	util.DrawValue(graphics,0,yDrawPosition,ship->GetTranslationMatrix());
+	yDrawPosition += 70;
+#endif
+	graphics.DrawString(0,yDrawPosition,"Seconds Per Frame:");
+	util.DrawValue(graphics,130,yDrawPosition,secondsPerFrame);
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"Frames Per Second:");
+	util.DrawValue(graphics,130,yDrawPosition,framesPerSecond);
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"Health:");
+	util.DrawValue(graphics,80,yDrawPosition,ship->GetHealth());
+	yDrawPosition += 10;
+	graphics.DrawString(0,yDrawPosition,"Score:");
+	util.DrawValue(graphics,80,yDrawPosition,score + ship->GetHealth() * 20);
+}
+
 float Game::GetHeight()
 {
 	return SCREEN_HEIGHT;
@@ -154,4 +208,19 @@ float Game::GetHeight()
 float Game::GetWidth()
 {
 	return SCREEN_WIDTH;
+}
+	
+Screen* Game::GetNextScreen()
+{
+	Screen* endScreen;
+	if(ship->isAlive)
+	{
+		endScreen = new VictoryScreen();
+	}
+	else
+	{
+		endScreen = new DefeatScreen();
+	}
+	endScreen->SetScore(score);
+	return endScreen;
 }

@@ -3,7 +3,11 @@
 
 GameObject::GameObject()
 {
-	radsRotated = 0.0f;
+	radsRotatedAroundZ = 0.0f;
+	radsRotatedAroundX = 0.0f;
+	height = 0;
+	width = 0;
+	depth = 0;
 	isAlive = true;
 	color = Color(0,200,200);
 }
@@ -14,7 +18,7 @@ GameObject::~GameObject(void)
 	//delete[] shapes;
 }
 
-Matrix3 GameObject::GetTranslationMatrix()
+Matrix4 GameObject::GetTranslationMatrix()
 {
 	return translationMatrix;
 }
@@ -23,10 +27,11 @@ void GameObject::Draw(Core::Graphics graphics)
 {
 	if(isAlive)
 	{
-	translationMatrix = Matrix3();
+	translationMatrix = Matrix4();
 	translationMatrix.Translate(position);
-	Matrix3 drawMatrix;
-	drawMatrix.Rotate(radsRotated);
+	Matrix4 drawMatrix;
+	drawMatrix.RotateAroundZ(radsRotatedAroundZ);
+	drawMatrix.RotateAroundX(radsRotatedAroundX);
 	translationMatrix = drawMatrix * translationMatrix;
 	for(int i = 0 ; i < numberOfShapes ; i++)
 	{
@@ -35,31 +40,33 @@ void GameObject::Draw(Core::Graphics graphics)
 			graphics.SetColor(this->VaryColor());
 		}
 		(shapes + i)->SetTranslationMatrix(translationMatrix);
-		(shapes + i)->DrawShape(graphics);
+		(shapes + i)->DrawShape(graphics,position);
 	}
-	graphics.SetColor(RGB(0,255,255));
+		if(shouldVaryColor)
+		{
+			graphics.SetColor(RGB(0,255,255));
+		}
 	}
 }
 
-void GameObject::Update(Vector2 accelerationVector,float dt)
+void GameObject::Update(Vector3 accelerationVector,float dt)
 {
 	if(isAlive)
 	{
-	Matrix3 rotation;
-	rotation.Rotate(radsRotated);
-	velocity = velocity + ((acceleration * dt * accelerationVector) * rotation);
-	position = position + velocity;
+		Matrix4 rotation;
+		rotation.RotateAroundZ(radsRotatedAroundZ);
+		rotation.RotateAroundX(radsRotatedAroundX);
+		velocity = velocity + ((acceleration * dt * accelerationVector) * rotation);
+		position = position + velocity;
 	}
 }
 
 void GameObject::Update(float dt)
 {
-	Matrix3 rotation;
-	rotation.Rotate(radsRotated);
 	position = position + velocity * dt;
 }
 
-void GameObject::SetPosition(Vector2 position)
+void GameObject::SetPosition(Vector3 position)
 {
 	GameObject::position = position;
 	for(int i = 0 ; i < numberOfShapes ; i++)
@@ -68,9 +75,14 @@ void GameObject::SetPosition(Vector2 position)
 	}
 }
 
-void GameObject::Rotate(float rads)
+void GameObject::RotateAroundZ(float rads)
 {
-	radsRotated += rads;
+	radsRotatedAroundZ += rads;
+}
+
+void GameObject::RotateAroundX(float rads)
+{
+	radsRotatedAroundX += rads;
 }
 
 float GameObject::GetHeight()
@@ -96,7 +108,7 @@ float GameObject::GetWidth()
 		for(int i = 0; i < numberOfShapes; i++)
 		{
 			float shapeWidth = (shapes + i)->GetWidth();
-			if(height < shapeWidth)
+			if(width < shapeWidth)
 			{
 				width = shapeWidth;
 			}
@@ -105,17 +117,33 @@ float GameObject::GetWidth()
 	return width;
 }
 
-void GameObject::SetVelocity(Vector2 vel)
+float GameObject::GetDepth()
+{
+	if(depth == 0)
+	{
+		for(int i = 0; i < numberOfShapes; i++)
+		{
+			float shapeDepth = (shapes + i)->GetDepth();
+			if(depth < shapeDepth)
+			{
+				depth = shapeDepth;
+			}
+		}
+	}
+	return width;
+}
+
+void GameObject::SetVelocity(Vector3 vel)
 {
 	velocity = vel;
 }
 
-Vector2 GameObject::GetVelocity()
+Vector3 GameObject::GetVelocity()
 {
 	return velocity;
 }
 
-Vector2 GameObject::GetPosition()
+Vector3 GameObject::GetPosition()
 {
 	return position;
 }
@@ -124,4 +152,14 @@ Core::RGB GameObject::VaryColor()
 {
 	Color next = randomGenerator.GenerateVaryRandomColor(color,200);
 	return RGB(next.red,next.green,next.blue);
+}
+
+void GameObject::SetColor(Color color)
+{
+	GameObject::color = color;
+}
+
+Color GameObject::GetColor()
+{
+	return color;
 }

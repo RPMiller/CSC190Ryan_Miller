@@ -10,32 +10,73 @@ HeroShip::~HeroShip(void)
 	//delete shapes;
 }
 
-void HeroShip::Init(Vector2 position)
+void HeroShip::Init(Vector3 position)
 {
 	HeroShip::position = position;
-	fountain = new FountainParticleEffect(500,Vector2(position.x,position.y + 17));
+	fountain = new FountainParticleEffect(500,Vector3(position.x,position.y + height / 2,position.z + depth / 2));
 	fountain->Init();
+	fountain->SetColor(Color(255,150,0));
+	turret = BasicTurret();
+
+	health = 10;
 
 	acceleration = 12;
-	const int numberOfShipLines = 7;
-	const float shipSize = 32;
-	Vector2* shipLines = new Vector2[numberOfShipLines];
-	shipLines[0] = Vector2(0,-shipSize);
-	shipLines[1] = Vector2(shipSize,0);
-	shipLines[2] = Vector2(shipSize,shipSize);
-	shipLines[3] = Vector2(0,shipSize / 2);
-	shipLines[4] = Vector2(-shipSize,shipSize);
-	shipLines[5] = Vector2(-shipSize,0);
-	shipLines[6] = Vector2(0,-shipSize);
-	Shape ship = Shape(shipLines,numberOfShipLines,translationMatrix);
-	turret.TransformToBasicTurret();
-
-	numberOfShapes = 1;
-	height = ship.GetHeight();
-	width = ship.GetWidth();
+	numberOfShapes = 19;
 	shapes = new Shape[numberOfShapes];
 
-	shapes[0] = ship;
+	const float mainBodyHalfWidth = 40;
+	const float mainBodyHalfHeight = 40;
+	const float mainBodyHalfDepth = 60;
+	const float wingishThingWidth = 60;
+	const float wingishThingHeight = 50;
+	const float wingishThingDepth = 30;
+	const float wingWidth = 180;
+	const float wingHeight = 60;
+	const float wingDepth = 30;
+
+
+	int shapeIndex = 0;
+	Vector3 bottomLeft(-mainBodyHalfWidth,mainBodyHalfHeight,0);
+	Vector3 bottomRight(mainBodyHalfWidth,mainBodyHalfHeight,0);
+	Vector3 top(0,-mainBodyHalfHeight/2,0);
+	Vector3 mainTop(0,-mainBodyHalfHeight,mainBodyHalfDepth);
+	Vector3 deep(0,0,mainBodyHalfDepth * 2);
+	Vector3 wingishLeftBottom(-mainBodyHalfWidth - wingishThingWidth / 3, mainBodyHalfHeight + wingishThingHeight /2,wingishThingDepth /3);
+	Vector3 wingishLeftTop(-mainBodyHalfWidth - wingishThingWidth, -mainBodyHalfHeight - wingishThingHeight,-wingishThingDepth);
+	Vector3 wingishLeftDeep(-mainBodyHalfWidth - wingishThingWidth / 2,mainBodyHalfHeight,wingishThingDepth /2);
+	Vector3 wingishRightBottom(mainBodyHalfWidth + wingishThingWidth / 3, mainBodyHalfHeight + wingishThingHeight /2,wingishThingDepth /3);
+	Vector3 wingishRightTop(mainBodyHalfWidth + wingishThingWidth, -mainBodyHalfHeight - wingishThingHeight,-wingishThingDepth);
+	Vector3 wingishRightDeep(mainBodyHalfWidth + wingishThingWidth / 2,mainBodyHalfHeight,wingishThingDepth /2);
+	Vector3 wingLeftTop(-mainBodyHalfWidth - wingWidth / 3,mainBodyHalfHeight,wingDepth/3);
+	Vector3 wingLeftLow(-mainBodyHalfWidth - wingWidth / 3,mainBodyHalfHeight + wingHeight /1.4f,wingDepth/3);
+	Vector3 wingLeftBottom(-mainBodyHalfWidth - wingWidth,mainBodyHalfHeight + wingHeight,-wingDepth);
+	Vector3 wingRightTop(mainBodyHalfWidth + wingWidth / 3,mainBodyHalfHeight,wingDepth/3);
+	Vector3 wingRightLow(mainBodyHalfWidth + wingWidth / 3,mainBodyHalfHeight + wingHeight /1.4f,wingDepth/3);
+	Vector3 wingRightBottom(mainBodyHalfWidth + wingWidth,mainBodyHalfHeight + wingHeight,-wingDepth);
+
+	ShapeBuilder::BuildTriangle(bottomLeft,bottomRight,top,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(bottomLeft,top,mainTop,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(bottomRight,top,mainTop,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(bottomLeft,mainTop,deep,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(bottomRight,mainTop,deep,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(bottomLeft,wingishLeftBottom,wingishLeftTop,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(wingishLeftDeep,wingishLeftBottom,wingishLeftTop,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(wingishLeftDeep,wingishLeftBottom,wingishLeftTop,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(bottomRight,wingishRightBottom,wingishRightTop,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(wingishRightDeep,wingishRightBottom,wingishRightTop,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(wingishRightDeep,wingishRightBottom,wingishRightTop,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(bottomLeft,wingLeftTop,wingLeftBottom,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(bottomLeft,wingLeftLow,wingLeftBottom,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(wingLeftLow,wingLeftTop,wingLeftBottom,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(wingLeftLow,wingLeftTop,bottomLeft,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(bottomRight,wingRightTop,wingRightBottom,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(bottomRight,wingRightLow,wingRightBottom,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(wingRightLow,wingRightTop,wingRightBottom,shapes,shapeIndex);
+	ShapeBuilder::BuildTriangle(wingRightLow,wingRightTop,bottomRight,shapes,shapeIndex);
+
+	height = GetHeight();
+	width = GetWidth();
+	depth = GetDepth();
 }
 
 void HeroShip::Draw(Core::Graphics graphics)
@@ -45,7 +86,7 @@ void HeroShip::Draw(Core::Graphics graphics)
 	turret.Draw(graphics);
 }
 
-void HeroShip::Update(Vector2 accelerationVector,float dt)
+void HeroShip::Update(Vector3 accelerationVector,float dt)
 {
 	GameObject::Update(accelerationVector,dt);
 	turret.Update(dt);
@@ -71,11 +112,19 @@ FountainParticleEffect* HeroShip::GetFountainParticleEffect()
 
 void HeroShip::UpdateFountain()
 {
-	Vector2 down(0,1);
-	Vector2 fountainOffSet(0 , 17);
-	Vector2 fountainOrigin(Vector2(position.x,position.y));
-	Matrix3 rotation;
-	rotation.Rotate(radsRotated);
+	Vector3 down(0,1,0);
+	Vector3 fountainOffSet(0 , 17,0);
+	Vector3 fountainOrigin(Vector3(position.x,position.y,position.z));
+	Matrix4 rotation;
+	rotation.RotateAroundZ(radsRotatedAroundZ);
 	fountain->SetOrigin(fountainOffSet * rotation + fountainOrigin);
 	fountain->SetDirection(down * rotation);
+}
+
+ExplosionParticleEffect* HeroShip::ExplodeObject()
+{
+	ExplosionParticleEffect* explosion = new ExplosionParticleEffect(300,position);
+	explosion->Init();
+	explosion->SetColor(Color(255,255,255));
+	return explosion;
 }

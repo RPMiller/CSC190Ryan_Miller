@@ -1,7 +1,7 @@
 #include "ParticleEffect.h"
 
 
-ParticleEffect::ParticleEffect(int numParticles,Vector2 origin) : origin(origin) , numberOfParticles(numParticles)
+ParticleEffect::ParticleEffect(int numParticles,Vector3 origin) : origin(origin) , numberOfParticles(numParticles)
 {
 	particles = new Particle[numParticles];
 }
@@ -10,7 +10,7 @@ ParticleEffect::~ParticleEffect(void)
 {
 }
 
-void ParticleEffect::SetOrigin(Vector2 nextOrigin)
+void ParticleEffect::SetOrigin(Vector3 nextOrigin)
 {
 	origin = nextOrigin;
 }
@@ -25,4 +25,10 @@ bool ParticleEffect::isRunning()
 	}
 
 	return isRunning;
+}
+
+void ParticleEffect::SetColor(Color color)
+{
+	ParticleEffect::color = color;
+
 }

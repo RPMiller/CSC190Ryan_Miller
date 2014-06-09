@@ -1,6 +1,6 @@
 #include "ExplosionParticleEffect.h"
 
-ExplosionParticleEffect::ExplosionParticleEffect(int numParticles,Vector2 origin) : ParticleEffect(numParticles,origin)
+ExplosionParticleEffect::ExplosionParticleEffect(int numParticles,Vector3 origin) : ParticleEffect(numParticles,origin)
 {
 
 }
@@ -15,7 +15,8 @@ void ExplosionParticleEffect::Init()
 	{
 		particles[i] = SquareParticle();
 		particles[i].SetPosition(origin);
-		particles[i].SetVelocity(randomGenerator.GenerateRandomUnitVector() * randomGenerator.GenerateRandomFloat(20,60));
+		Vector2 unitVector = randomGenerator.GenerateRandomUnitVector();
+		particles[i].SetVelocity(Vector3(unitVector.x,unitVector.y,1) * randomGenerator.GenerateRandomFloat(20,60));
 		particles[i].SetLifeSpan(randomGenerator.GenerateRandomFloat(1,8));
 	}
 }

@@ -14,21 +14,21 @@ void ArbitraryBounceOption::CheckBounds(GameObject* gameObject,float screenHeigh
 {
 	bounceOption.CheckBounds(gameObject,screenHeight,screenWidth);
 
-	Vector2 shipFromWall1 = Vector2(screenWidth/2,0) - gameObject->GetPosition();
+	Vector2 shipFromWall1 = Vector2(screenWidth/2,0) - Vector2(gameObject->GetPosition().x,gameObject->GetPosition().y);
 	Vector2 wall1 = Vector2(screenWidth/2,0) - Vector2 (screenWidth,screenHeight/2);
-	Vector2 shipFromWallAfterMove1 = Vector2(screenWidth/2,0) - (gameObject->GetPosition() + gameObject->GetVelocity());
+	Vector2 shipFromWallAfterMove1 = Vector2(screenWidth/2,0) - (Vector2(gameObject->GetPosition().x,gameObject->GetPosition().y) + Vector2(gameObject->GetVelocity().x,gameObject->GetVelocity().y));
 	
-	Vector2 shipFromWall2 = Vector2 (screenWidth,screenHeight/2) - gameObject->GetPosition();
+	Vector2 shipFromWall2 = Vector2 (screenWidth,screenHeight/2) - Vector2(gameObject->GetPosition().x,gameObject->GetPosition().y);
 	Vector2 wall2 = Vector2 (screenWidth,screenHeight/2) - Vector2(screenWidth/2,screenHeight);
-	Vector2 shipFromWallAfterMove2 = Vector2(screenWidth,screenHeight/2) - (gameObject->GetPosition() + gameObject->GetVelocity());
+	Vector2 shipFromWallAfterMove2 = Vector2(screenWidth,screenHeight/2) - (Vector2(gameObject->GetPosition().x,gameObject->GetPosition().y) + Vector2(gameObject->GetVelocity().x,gameObject->GetVelocity().y));
 	
-	Vector2 shipFromWall3 = Vector2(screenWidth/2,screenHeight) - gameObject->GetPosition();
+	Vector2 shipFromWall3 = Vector2(screenWidth/2,screenHeight) - Vector2(gameObject->GetPosition().x,gameObject->GetPosition().y);
 	Vector2 wall3 = Vector2(screenWidth/2,screenHeight) - Vector2(0,screenHeight/2);
-	Vector2 shipFromWallAfterMove3 = Vector2(screenWidth/2,screenHeight) - (gameObject->GetPosition() + gameObject->GetVelocity());
+	Vector2 shipFromWallAfterMove3 = Vector2(screenWidth/2,screenHeight) - (Vector2(gameObject->GetPosition().x,gameObject->GetPosition().y) + Vector2(gameObject->GetVelocity().x,gameObject->GetVelocity().y));
 	
-	Vector2 shipFromWall4 = Vector2(0,screenHeight/2) - gameObject->GetPosition();
+	Vector2 shipFromWall4 = Vector2(0,screenHeight/2) - Vector2(gameObject->GetPosition().x,gameObject->GetPosition().y);
 	Vector2 wall4 = Vector2(0,screenHeight/2) - Vector2(screenWidth/2,0);
-	Vector2 shipFromWallAfterMove4 = Vector2(0,screenHeight/2) - (gameObject->GetPosition() + gameObject->GetVelocity());
+	Vector2 shipFromWallAfterMove4 = Vector2(0,screenHeight/2) - (Vector2(gameObject->GetPosition().x,gameObject->GetPosition().y) + Vector2(gameObject->GetVelocity().x,gameObject->GetVelocity().y));
 	
 	
 	IsInBounds(shipFromWall1,shipFromWallAfterMove1,wall1,gameObject);
@@ -45,6 +45,7 @@ void ArbitraryBounceOption::IsInBounds(Vector2 shipFromWall,Vector2 shipFromWall
 	if(dist * distAfterMove < 0)
 	{
 		Vector2 normalizedNormal = Normalized(normal);
-		gameObject->SetVelocity(gameObject->GetVelocity() - 2 * (gameObject->GetVelocity() * normalizedNormal) * normalizedNormal);
+		Vector2 nextVel = Vector2(gameObject->GetVelocity().x,gameObject->GetVelocity().y) - 2 * (Vector2(gameObject->GetVelocity().x,gameObject->GetVelocity().y) * normalizedNormal) * normalizedNormal;
+		gameObject->SetVelocity(Vector3(nextVel.x,nextVel.y,gameObject->GetVelocity().z));
 	}
 }

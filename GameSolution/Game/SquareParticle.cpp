@@ -14,12 +14,12 @@ SquareParticle::SquareParticle(void)
 	for(int i = 0; i < numberOfShapes; i ++)
 	{
 		float particleSize = maxParticleSize - ( (i + 1) * maxParticleSize / numberOfShapes) + minParticleSize;
-		Vector2* particleLines = new Vector2[numberOfParticleLines];
-		particleLines[0] = Vector2(-particleSize,particleSize);
-		particleLines[1] = Vector2(particleSize,particleSize);
-		particleLines[2] = Vector2(particleSize,-particleSize);
-		particleLines[3] = Vector2(-particleSize,-particleSize);
-		particleLines[4] = Vector2(-particleSize,particleSize);
+		Vector3* particleLines = new Vector3[numberOfParticleLines];
+		particleLines[0] = Vector3(-particleSize,particleSize,0);
+		particleLines[1] = Vector3(particleSize,particleSize,0);
+		particleLines[2] = Vector3(particleSize,-particleSize,0);
+		particleLines[3] = Vector3(-particleSize,-particleSize,0);
+		particleLines[4] = Vector3(-particleSize,particleSize,0);
 		shapes[i] = Shape(particleLines,numberOfParticleLines,translationMatrix);
 	}
 }

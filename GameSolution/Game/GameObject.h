@@ -1,20 +1,21 @@
 #pragma once
 #include "Shape.h"
-#include "Matrix3.h"
+#include "Matrix4.h"
 #include "Color.h"
 #include "RandomGenerator.h"
+#include "ShapeBuilder.h"
 
 class GameObject
 {
 protected :
 	Shape* shapes;
-	Matrix3 translationMatrix;
-	Vector2 velocity;
-	Vector2 position;
-	float height;
-	float width;
+	Matrix4 translationMatrix;
+	Vector3 velocity;
+	Vector3 position;
+	float height,width,depth;
 	float acceleration;
-	float radsRotated;
+	float radsRotatedAroundZ;
+	float radsRotatedAroundX;
 	int numberOfShapes;
 	RandomGenerator randomGenerator;
 	Color color;
@@ -24,19 +25,23 @@ protected :
 public:
 	GameObject();
 	~GameObject(void);
-	virtual void Init(Vector2 position){position = Vector2(0,0); return;}
+	virtual void Init(Vector3 position){position = Vector3(0,0,0); return;}
 	float GetHeight();
 	float GetWidth();
-	Matrix3 GetTranslationMatrix();
-	void SetPosition(Vector2 position);
+	float GetDepth();
+	Matrix4 GetTranslationMatrix();
+	virtual void SetPosition(Vector3 position);
 	virtual void Draw(Core::Graphics graphics);
-	virtual void Update(Vector2 accelerationVector,float dt);
+	virtual void Update(Vector3 accelerationVector,float dt);
 	virtual void Update(float dt);
-	void SetVelocity(Vector2 vel);
-	Vector2 GetPosition();
-	Vector2 GetVelocity();
-	void Rotate(float rads);
+	void SetVelocity(Vector3 vel);
+	Vector3 GetPosition();
+	Vector3 GetVelocity();
+	void RotateAroundZ(float rads);
+	void RotateAroundX(float rads);
 	bool isAlive;
 	Core::RGB VaryColor();
+	void SetColor(Color color);
+	Color GetColor();
 };
 

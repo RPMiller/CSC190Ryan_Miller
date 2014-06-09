@@ -65,3 +65,28 @@ Vector3 inline operator/(const Vector3& left,float scale)
 	}
 	return Vector3(left.x / scale, left.y/scale, left.z / scale);
 }
+
+Vector3 inline Normalized(const Vector3& vector)
+{
+	return Vector3(vector / Length(vector));
+}
+
+float inline Length(const Vector3& vector)
+{
+	return sqrt(LengthSquared(vector));
+}
+
+float inline LengthSquared(const Vector3& vector)
+{
+	return pow(vector.x,2.0f) + pow(vector.y,2.0f) + pow(vector.z,2.0f);
+}
+
+Vector3 inline PerpCCW(Vector3 vector)
+{
+	return Vector3(-vector.y,vector.x,vector.z);
+}
+
+Vector3 inline PerpCW(Vector3 vector)
+{
+	return Vector3(vector.y,-vector.x,vector.z);
+}

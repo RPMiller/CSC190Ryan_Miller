@@ -1,10 +1,10 @@
 #include "FountainParticleEffect.h"
 
 
-FountainParticleEffect::FountainParticleEffect(int numParticles,Vector2 origin) : ParticleEffect(numParticles,origin)
+FountainParticleEffect::FountainParticleEffect(int numParticles,Vector3 origin) : ParticleEffect(numParticles,origin)
 {
 	range = .5;
-	direction = Vector2(0,1);
+	direction = Vector3(0,1,0);
 }
 
 
@@ -35,6 +35,8 @@ void FountainParticleEffect::Update(float dt)
 	
 void FountainParticleEffect::Draw(Core::Graphics graphics)
 {
+		graphics.SetColor(RGB(color.red,color.green,color.blue));
+
 	for(int i = 0; i < numberOfParticles; i++)
 	{
 		particles[i].Draw(graphics);
@@ -45,7 +47,8 @@ void FountainParticleEffect::InitializeParticle(int index)
 {
 	particles[index] = DotParticle();
 	particles[index].SetPosition(origin);
-	particles[index].SetVelocity(randomGenerator.GenerateRandomVector(direction.x - range,direction.x + range,direction.y - range,direction.y + range) * randomGenerator.GenerateRandomFloat(20,60));
+	Vector2 unitVector = randomGenerator.GenerateRandomVector(direction.x - range,direction.x + range,direction.y - range,direction.y + range);
+	particles[index].SetVelocity(Vector3(unitVector.x,unitVector.y,-2) * randomGenerator.GenerateRandomFloat(20,60));
 	particles[index].SetLifeSpan(randomGenerator.GenerateRandomFloat(1,3));
 }
 
@@ -54,7 +57,7 @@ void FountainParticleEffect::SetRange(float range)
 	FountainParticleEffect::range = range;
 }
 
-void FountainParticleEffect::SetDirection(Vector2 direction)
+void FountainParticleEffect::SetDirection(Vector3 direction)
 {
 	FountainParticleEffect::direction = direction;
 }

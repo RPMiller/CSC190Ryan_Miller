@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LOG_ON;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\Engine;$(SolutionDir)\Core\include</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -87,59 +87,91 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArbitraryBounceOption.cpp" />
+    <ClCompile Include="BasicTurret.cpp" />
+    <ClCompile Include="BeamShape.cpp" />
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossEye.cpp" />
+    <ClCompile Include="BossTurret.cpp" />
     <ClCompile Include="BounceOption.cpp" />
     <ClCompile Include="BoundsOption.cpp" />
+    <ClCompile Include="Collideable.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="DefeatScreen.cpp" />
     <ClCompile Include="DotParticle.cpp" />
+    <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EnemyShip.cpp" />
+    <ClCompile Include="EnemyTurret.cpp" />
     <ClCompile Include="ExplosionParticleEffect.cpp" />
     <ClCompile Include="FountainParticleEffect.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HeroShip.cpp" />
+    <ClCompile Include="IntroScreen.cpp" />
     <ClCompile Include="Lerper.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Missile.cpp" />
+    <ClCompile Include="MyMathUtil.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleEffect.cpp" />
     <ClCompile Include="ParticleEffectManager.cpp" />
     <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />
     <ClCompile Include="RecursiveRotation.cpp" />
+    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="ShapeBuilder.cpp" />
     <ClCompile Include="SquareParticle.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="VictoryScreen.cpp" />
     <ClCompile Include="WrapOption.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArbitraryBounceOption.h" />
+    <ClInclude Include="BasicTurret.h" />
+    <ClInclude Include="BeamShape.h" />
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossEye.h" />
+    <ClInclude Include="BossTurret.h" />
     <ClInclude Include="BounceOption.h" />
     <ClInclude Include="BoundsOption.h" />
+    <ClInclude Include="Collideable.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="DefeatScreen.h" />
     <ClInclude Include="DotParticle.h" />
+    <ClInclude Include="EndScreen.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemyShip.h" />
+    <ClInclude Include="EnemyTurret.h" />
     <ClInclude Include="ExplosionParticleEffect.h" />
     <ClInclude Include="FountainParticleEffect.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HeroShip.h" />
+    <ClInclude Include="IntroScreen.h" />
     <ClInclude Include="Lerper.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Missile.h" />
+    <ClInclude Include="MyMathUtil.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleEffect.h" />
     <ClInclude Include="ParticleEffectManager.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="RecursiveRotation.h" />
+    <ClInclude Include="Screen.h" />
+    <ClInclude Include="ScreenConstants.h" />
     <ClInclude Include="Shape.h" />
+    <ClInclude Include="ShapeBuilder.h" />
     <ClInclude Include="SquareParticle.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="VictoryScreen.h" />
     <ClInclude Include="WrapOption.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

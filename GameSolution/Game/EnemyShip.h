@@ -2,16 +2,20 @@
 #include "gameobject.h"
 #include "ExplosionParticleEffect.h"
 #include "Missile.h"
+#include "Enemy.h"
+#include "EnemyTurret.h"
 
-class EnemyShip :
-	public GameObject
+class EnemyShip : public Enemy
 {
+	EnemyTurret turret;
 public:
 	EnemyShip(void);
 	~EnemyShip(void);
-	bool CheckCollision(Missile missile);
 	ExplosionParticleEffect* ExplodeObject();
-	void FollowHero(Vector2 heroPosition, float dt);
-	void Init(Vector2 position);
+	void Init(Vector3 position);
+	void FollowHero(Vector3 heroPosition, float dt);
+	void Draw(Core::Graphics graphics);
+	Missile** GetMissiles();
+	int GetTotalMissileNumber();
 };
 
