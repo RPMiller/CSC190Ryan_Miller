@@ -1,4 +1,4 @@
-﻿Build started 6/9/2014 9:07:45 PM.
+﻿Build started 6/9/2014 9:15:05 PM.
      1>Project "C:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\Game\Game.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\\Engine /IC:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\\Core\include /ZI /nologo /W4 /WX /Od /Oy- /D LOG_ON /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
@@ -49,4 +49,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.45
+Time Elapsed 00:00:01.51
