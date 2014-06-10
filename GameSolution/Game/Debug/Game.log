@@ -1,8 +1,50 @@
-﻿Build started 6/9/2014 9:15:05 PM.
+﻿Build started 6/9/2014 9:22:32 PM.
      1>Project "C:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\Game\Game.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\\Engine /IC:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\\Core\include /ZI /nologo /W4 /WX /Od /Oy- /D LOG_ON /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\\Engine /IC:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\\Core\include /ZI /nologo /W4 /WX /Od /Oy- /D LOG_ON /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ArbitraryBounceOption.cpp BasicTurret.cpp BeamShape.cpp Boss.cpp BossEye.cpp BossTurret.cpp BounceOption.cpp BoundsOption.cpp Collideable.cpp Color.cpp DefeatScreen.cpp DotParticle.cpp EndScreen.cpp EnemyManager.cpp EnemyShip.cpp EnemyTurret.cpp ExplosionParticleEffect.cpp FountainParticleEffect.cpp Game.cpp GameObject.cpp HeroShip.cpp IntroScreen.cpp Lerper.cpp Missile.cpp MyMathUtil.cpp Particle.cpp ParticleEffect.cpp ParticleEffectManager.cpp RandomGenerator.cpp RecursiveRotation.cpp Screen.cpp Shape.cpp ShapeBuilder.cpp SquareParticle.cpp Timer.cpp Turret.cpp Utilities.cpp VictoryScreen.cpp WrapOption.cpp main.cpp
          main.cpp
+         WrapOption.cpp
+         VictoryScreen.cpp
+         Utilities.cpp
+         Turret.cpp
+         Timer.cpp
+         SquareParticle.cpp
+         ShapeBuilder.cpp
+         Shape.cpp
+         Screen.cpp
+         RecursiveRotation.cpp
+         RandomGenerator.cpp
+         ParticleEffectManager.cpp
+         ParticleEffect.cpp
+         Particle.cpp
+         MyMathUtil.cpp
+         Missile.cpp
+         Lerper.cpp
+         IntroScreen.cpp
+         HeroShip.cpp
+         Generating Code...
+         Compiling...
+         GameObject.cpp
+         Game.cpp
+         FountainParticleEffect.cpp
+         ExplosionParticleEffect.cpp
+         EnemyTurret.cpp
+         EnemyShip.cpp
+         EnemyManager.cpp
+         EndScreen.cpp
+         DotParticle.cpp
+         DefeatScreen.cpp
+         Color.cpp
+         Collideable.cpp
+         BoundsOption.cpp
+         BounceOption.cpp
+         BossTurret.cpp
+         BossEye.cpp
+         Boss.cpp
+         BeamShape.cpp
+         BasicTurret.cpp
+         ArbitraryBounceOption.cpp
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\Debug\Game.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\Debug\ /LIBPATH:C:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\\Core\lib /LIBPATH:C:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\Debug\ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Engine.lib Core.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\Debug\Game.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\rmiller\Desktop\Quarter8\C++\Labs\GameSkeleton\CSC190Ryan_Miller\GameSolution\Debug\Game.lib" /MACHINE:X86 Debug\ArbitraryBounceOption.obj
          Debug\BasicTurret.obj
@@ -49,4 +91,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.51
+Time Elapsed 00:00:25.00
