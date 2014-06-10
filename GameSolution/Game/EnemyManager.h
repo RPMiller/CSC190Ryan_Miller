@@ -6,6 +6,7 @@
 #include "HeroShip.h"
 #include "ParticleEffectManager.h"
 #include "Boss.h"
+#include "Logger.h"
 
 class EnemyManager
 {

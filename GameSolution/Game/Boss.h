@@ -1,6 +1,7 @@
 #pragma once
 #include "enemy.h"
 #include "BossEye.h"
+#include "Logger.h"
 
 class Boss :
 	public Enemy

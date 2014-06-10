@@ -116,6 +116,11 @@ void Boss::FollowHero(Vector3 heroPosition,float dt)
 	rightEye.Update(dt);
 	leftEye.Fire(heroPosition);
 	rightEye.Fire(heroPosition);
+	isAlive = leftEye.isAlive && rightEye.isAlive;
+	if(!isAlive)
+	{
+		LOG(Info,"Boss Killed");
+	}
 	GameObject::Update(dt);
 }
 

@@ -215,10 +215,12 @@ Screen* Game::GetNextScreen()
 	Screen* endScreen;
 	if(ship->isAlive)
 	{
+		LOG(Info,"Hero Won");
 		endScreen = new VictoryScreen();
 	}
 	else
 	{
+		LOG(Info,"Hero Lost");
 		endScreen = new DefeatScreen();
 	}
 	endScreen->SetScore(score + ship->GetHealth() * POINTS_PER_HEALTH);

@@ -26,6 +26,7 @@ bool EnemyManager::UpdateEnemies(HeroShip* hero,ParticleEffectManager* effectMan
 			else if(waveNumber == BOSS_WAVE)
 			{
 				SpawnBoss();
+				LOG(Info,"Boss Spawned");
 				waveNumber++;
 			}
 		}

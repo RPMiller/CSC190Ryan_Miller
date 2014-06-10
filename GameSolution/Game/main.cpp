@@ -49,6 +49,7 @@ int main()
 #pragma warning(default : 4127)
 	game = new IntroScreen();
 	game->SetScore(0);
+	LOG(Info,"Intro Started");
 	srand(time_t(NULL));
 	Core::Init("Game Demo",(int)SCREEN_WIDTH,(int)SCREEN_HEIGHT);
 	Core::RegisterUpdateFn(Update);
@@ -61,8 +62,15 @@ bool Update(float dt)
 	if(game->Update(dt))
 	{
 		game = game->GetNextScreen();
+		LOG(Info,"Screen Changed");
 	}
-	return Input::IsPressed(Input::KEY_ESCAPE);
+	bool shouldExit = Input::IsPressed(Input::KEY_ESCAPE);
+	if(shouldExit)
+	{
+		LOG(Info,"Exiting");
+		END_LOG;
+	}
+	return shouldExit;
 
 	//dt;
 	//return false;
