@@ -87,3 +87,17 @@ void ShapeBuilder::BuildTriangle(Vector3 point1,Vector3 point2,Vector3 point3,Sh
 	shapes[startIndex] = Shape(triangle,triangleVetexes,Matrix4());
 	startIndex++;
 }
+
+
+void ShapeBuilder::BuildQuad(Vector3 point1,Vector3 point2,Vector3 point3,Vector3 point4,Shape* shapes,int &startIndex)
+{
+	const int quadVetexes = 5;
+	Vector3* quad = new Vector3[quadVetexes];
+	quad[0] = point1;
+	quad[1] = point2;
+	quad[2] = point3;
+	quad[3] = point4;
+	quad[4] = point1;
+	shapes[startIndex] = Shape(quad,quadVetexes,Matrix4());
+	startIndex++;
+}

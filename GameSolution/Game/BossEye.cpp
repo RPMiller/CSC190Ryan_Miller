@@ -23,13 +23,14 @@ void BossEye::Update(float dt)
 void BossEye::Init(Vector3 position)
 {
 	health = 10;
-	const float size = 200;
+	const float size = 100;
+	const float eyeHeight = -100;
 	color = Color(200,100,0);
 	numberOfShapes = 1;
 	shapes = new Shape[numberOfShapes];
-	Vector3 top(0,-size / 2,0);
-	Vector3 left(-size,size / 2,0);
-	Vector3 right(size,size / 2,0);
+	Vector3 top(0,-size / 2 + eyeHeight,0);
+	Vector3 left(-size,size / 2 + eyeHeight,0);
+	Vector3 right(size,size / 2 + eyeHeight,0);
 	int shapeIndex = 0;
 	ShapeBuilder::BuildTriangle(top,left,right,shapes,shapeIndex);
 	BossEye::position = position;

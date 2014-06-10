@@ -28,6 +28,7 @@
 using Core::Input;
 class Game : public Screen
 {
+	const float POINTS_PER_HEALTH;
 	HeroShip* ship;
 	//GameObject* lerp;
 	BoundsOption* boundsOption;

@@ -35,7 +35,7 @@ ExplosionParticleEffect* EnemyShip::ExplodeObject()
 	
 void EnemyShip::FollowHero(Vector3 heroPosition, float dt)
 {
-	const float BASE_SPEED = 1000;
+	const float BASE_SPEED = 300;
 	turret.SetBaseMissileVelocity(Normalized(heroPosition - position) * BASE_SPEED);
 	turret.Fire();
 	turret.Update(dt);

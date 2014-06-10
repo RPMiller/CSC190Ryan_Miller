@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game()
+Game::Game() : POINTS_PER_HEALTH(30)
 {
 	arbOn = false;
 	boundsType = "bounce";
@@ -198,7 +198,7 @@ void Game::DrawInfo(Core::Graphics graphics,float framesPerSecond,float secondsP
 	util.DrawValue(graphics,80,yDrawPosition,ship->GetHealth());
 	yDrawPosition += 10;
 	graphics.DrawString(0,yDrawPosition,"Score:");
-	util.DrawValue(graphics,80,yDrawPosition,score + ship->GetHealth() * 20);
+	util.DrawValue(graphics,80,yDrawPosition,score + ship->GetHealth() * POINTS_PER_HEALTH);
 }
 
 float Game::GetHeight()
@@ -221,6 +221,6 @@ Screen* Game::GetNextScreen()
 	{
 		endScreen = new DefeatScreen();
 	}
-	endScreen->SetScore(score);
+	endScreen->SetScore(score + ship->GetHealth() * POINTS_PER_HEALTH);
 	return endScreen;
 }
