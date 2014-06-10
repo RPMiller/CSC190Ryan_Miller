@@ -1,6 +1,6 @@
 #include "EnemyManager.h"
 
-EnemyManager::EnemyManager(void) : BOSS_WAVE(0)
+EnemyManager::EnemyManager(void) : BOSS_WAVE(4)
 {
 	timeTillNextSpawn = 15;
 	waveNumber = 0;
