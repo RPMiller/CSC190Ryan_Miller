@@ -25,6 +25,8 @@ bool Collideable::CheckCollision(Missile* missile)
 		{
 			missile->isAlive = false;
 			health--;
+			damageBlinkTime = damageBlinkMaxTime;
+			color = damageColor;
 			if(health <= 0)
 			{
 				isAlive = false;
@@ -33,6 +35,34 @@ bool Collideable::CheckCollision(Missile* missile)
 		}
 	}
 	return collided;
+}
+
+void Collideable::Update(Vector3 accelerationVector,float dt)
+{
+	GameObject::Update(accelerationVector, dt);
+	if(damageBlinkTime < 0)
+	{
+		color = normalColor;
+		damageBlinkTime = 0;
+	}
+	else if( damageBlinkTime > 0)
+	{
+		damageBlinkTime -= dt;
+	}
+}
+	
+void Collideable::Update(float dt)
+{
+	GameObject::Update(dt);
+	if(damageBlinkTime < 0)
+	{
+		color = normalColor;
+		damageBlinkTime = 0;
+	}
+	else if( damageBlinkTime > 0)
+	{
+		damageBlinkTime -= dt;
+	}
 }
 
 float Collideable::GetHealth()

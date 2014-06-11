@@ -10,5 +10,6 @@ public:
 	bool Update(float dt);
 	void Draw(Core::Graphics& graphics);
 	Screen* GetNextScreen();
+	virtual void Destroy();
 };
 

@@ -22,8 +22,12 @@ void HeroShip::Init(Vector3 position)
 	turret = BasicTurret();
 
 	health = 10;
+	normalColor = color;
+	damageColor = Color(255,0,0);
+	damageBlinkMaxTime = .3f;
+	damageBlinkTime = damageBlinkMaxTime;
 
-	acceleration = 20.5f;
+	acceleration = 25.5f;
 	numberOfShapes = 19;
 	shapes = new Shape[numberOfShapes];
 
@@ -92,7 +96,8 @@ void HeroShip::Draw(Core::Graphics graphics)
 
 void HeroShip::Update(Vector3 accelerationVector,float dt)
 {
-	GameObject::Update(accelerationVector,dt);
+	velocity = accelerationVector * acceleration;
+	Collideable::Update(accelerationVector,dt);
 
 	if(velocity.x >= 0)
 	{
@@ -129,7 +134,7 @@ void HeroShip::Update(Vector3 accelerationVector,float dt)
 	
 void HeroShip::Update(float dt)
 {
-	GameObject::Update(dt);
+	Collideable::Update(dt);
 	turret.Update(dt);
 }
 

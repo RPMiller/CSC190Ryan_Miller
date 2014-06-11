@@ -54,6 +54,10 @@ void Boss::Init(Vector3 position)
 	leftEye.Init(position);
 	rightEye.Init(position);
 	health = 1000000;
+	normalColor = color;
+	damageColor = Color(255,0,255);
+	damageBlinkMaxTime = .3f;
+	damageBlinkTime = damageBlinkMaxTime;
 
 	color = Color(255,255,255);
 

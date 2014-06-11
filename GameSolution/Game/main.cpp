@@ -46,11 +46,12 @@ void Draw(Core::Graphics& graphics);
 
 int main()
 {
-	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF |
- _CRTDBG_CHECK_ALWAYS_DF
+	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF 
  );
+
+	//_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF);
 #pragma warning(disable : 4127)
-	ASSERT(true,"test");
+	ASSERT(false,"test");
 #pragma warning(default : 4127)
 	game = new IntroScreen();
 	game->SetScore(0);
@@ -67,6 +68,7 @@ bool Update(float dt)
 	if(game->Update(dt))
 	{
 		Screen* nextScreen = game->GetNextScreen();
+		game->Destroy();
 		delete game;
 		game = nextScreen;
 		LOG(Info,"Screen Changed");
@@ -74,6 +76,9 @@ bool Update(float dt)
 	bool shouldExit = Input::IsPressed(Input::KEY_ESCAPE);
 	if(shouldExit)
 	{
+		game->Destroy();
+		delete game;
+		game = 0;
 		LOG(Info,"Exiting");
 		END_LOG;
 	}
@@ -123,7 +128,10 @@ void Draw(Core::Graphics& graphics)
 	//	graphics.DrawLine(previous.x,previous.y + 100,vector.x,vector.y + 100);
 	//	previous = vector;
 	//}
-	game->Draw(graphics);
+	if(game != 0)
+	{
+		game->Draw(graphics);
+	}
 
 #ifdef DEBUG
 	int yDrawPosition = (int)SCREEN_HEIGHT - 60;

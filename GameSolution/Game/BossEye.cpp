@@ -32,6 +32,11 @@ void BossEye::Init(Vector3 position)
 	const float size = 100;
 	const float eyeHeight = -100;
 	color = Color(200,100,0);
+	normalColor = color;
+	damageColor = Color(255,255,255);
+	damageBlinkMaxTime = .3f;
+	damageBlinkTime = damageBlinkMaxTime;
+
 	numberOfShapes = 1;
 	shapes = new Shape[numberOfShapes];
 	Vector3 top(0,-size / 2 + eyeHeight,0);

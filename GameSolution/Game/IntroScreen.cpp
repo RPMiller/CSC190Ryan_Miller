@@ -32,7 +32,11 @@ void IntroScreen::Draw(Core::Graphics& graphics)
 
 Screen* IntroScreen::GetNextScreen()
 {
+	return new Game();
+}
+
+void IntroScreen::Destroy()
+{
 	hero->Destroy();
 	delete hero;
-	return new Game();
 }

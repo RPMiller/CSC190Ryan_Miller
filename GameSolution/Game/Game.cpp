@@ -4,7 +4,7 @@ Game::Game() : POINTS_PER_HEALTH(30)
 {
 	arbOn = false;
 	boundsType = "bounce";
-	boundsOption = &bounce;
+	boundsOption = &wallOption;
 	HeroShip* heroShip = new HeroShip();
 	heroShip->Init(Vector3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0));
 	ship = heroShip;
@@ -27,7 +27,7 @@ Game::Game() : POINTS_PER_HEALTH(30)
 			float x = xPortionWidth * j;
 			float y = yPortionHeight * i;
 
-			FountainParticleEffect* fountain = new FountainParticleEffect(5,Vector3(x,y,0));
+			FountainParticleEffect* fountain = new FountainParticleEffect(4,Vector3(x,y,0));
 			fountain->Init();
 			fountain->SetRange(0);
 			fountain->SetDirection(fountainDirection);
@@ -70,7 +70,7 @@ bool Game::Update(float dt)
 	{
 		x = BASE_SPEED;
 	}
-	if(Input::IsPressed('1'))
+	/*if(Input::IsPressed('1'))
 	{
 		boundsOption = &wrap;
 		arbOn = false;
@@ -87,7 +87,7 @@ bool Game::Update(float dt)
 		arbOn = true;
 		boundsOption = &arb;
 		boundsType = "arbitrary bounce";
-	}
+	}*/
 	if(Input::IsPressed(32))
 	{
 		ship->Fire();
@@ -170,9 +170,9 @@ void Game::DrawInfo(Core::Graphics graphics,float framesPerSecond,float secondsP
 	yDrawPosition += 10;
 	graphics.DrawString(0,yDrawPosition,"S/Down : Increase Velocity In The Down Direction");
 	yDrawPosition += 10;
-	graphics.DrawString(0,yDrawPosition,"A/Left : Rotate Left");
+	graphics.DrawString(0,yDrawPosition,"A/Left : Increase Velocity In The Left Direction");
 	yDrawPosition += 10;
-	graphics.DrawString(0,yDrawPosition,"D/Right : Rotate Right");
+	graphics.DrawString(0,yDrawPosition,"D/Right : Increase Velocity In The Right Direction");
 	yDrawPosition += 10;
 	graphics.DrawString(0,yDrawPosition,"Space : Fire Missile");
 	yDrawPosition += 10;
@@ -226,9 +226,13 @@ Screen* Game::GetNextScreen()
 		endScreen = new DefeatScreen();
 	}
 	endScreen->SetScore(score + ship->GetHealth() * POINTS_PER_HEALTH);
+	return endScreen;
+}
+
+void Game::Destroy()
+{
 	ship->Destroy();
 	effectManager.Destroy();
 	enemyManger.Destroy();
 	delete ship;
-	return endScreen;
 }

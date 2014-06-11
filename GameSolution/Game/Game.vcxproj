@@ -125,6 +125,7 @@
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="VictoryScreen.cpp" />
+    <ClCompile Include="WallOption.cpp" />
     <ClCompile Include="WrapOption.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +169,7 @@
     <ClInclude Include="Turret.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="VictoryScreen.h" />
+    <ClInclude Include="WallOption.h" />
     <ClInclude Include="WrapOption.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -32,3 +32,8 @@ Screen* VictoryScreen::GetNextScreen()
 	intro->SetScore(score);
 	return intro;
 }
+
+void VictoryScreen::Destroy()
+{
+
+}

@@ -15,6 +15,7 @@ public:
 	virtual bool Update(float dt) = 0;
 	virtual void Draw(Core::Graphics& graphics) = 0;
 	virtual Screen* GetNextScreen() = 0;
+	virtual void Destroy() = 0;
 	void SetScore(float score);
 };
 

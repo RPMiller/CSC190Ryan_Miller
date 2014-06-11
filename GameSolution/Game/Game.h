@@ -18,6 +18,7 @@
 #include "VictoryScreen.h"
 #include "DefeatScreen.h"
 #include "ScreenConstants.h"
+#include "WallOption.h"
 
 #ifdef DEBUG
 #include "Profiler.h"
@@ -32,9 +33,10 @@ class Game : public Screen
 	HeroShip* ship;
 	//GameObject* lerp;
 	BoundsOption* boundsOption;
-	WrapOption wrap;
+	/*WrapOption wrap;
 	BounceOption bounce;
-	ArbitraryBounceOption arb;
+	ArbitraryBounceOption arb;*/
+	WallOption wallOption;
 	bool arbOn;
 	Utilities util;
 	char* boundsType;
@@ -58,6 +60,7 @@ public:
 	Screen* GetNextScreen();
 	float GetHeight();
 	float GetWidth();
+	virtual void Destroy();
 
 
 

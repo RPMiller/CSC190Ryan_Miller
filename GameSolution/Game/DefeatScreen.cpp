@@ -32,3 +32,8 @@ Screen* DefeatScreen::GetNextScreen()
 	intro->SetScore(score);
 	return intro;
 }
+
+void DefeatScreen::Destroy()
+{
+
+}

@@ -21,6 +21,10 @@ void EnemyShip::Init(Vector3 position)
 	EnemyShip::position = position;
 	color = Color(150,20,20);
 	health = 1;
+	normalColor = color;
+	damageColor = Color(0,255,255);
+	damageBlinkMaxTime = .3f;
+	damageBlinkTime = damageBlinkMaxTime;
 
 	acceleration = 8000.0f;
 	const float shipSize = 26;
