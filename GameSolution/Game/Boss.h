@@ -17,5 +17,7 @@ public:
 	void FollowHero(Vector3 heroPosition,float dt);
 	Missile** GetMissiles();
 	int GetTotalMissileNumber();
+	bool AreMissilesFromOneTurret();
+	virtual void Destroy();
 };
 

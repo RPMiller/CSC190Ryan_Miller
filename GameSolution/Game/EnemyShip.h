@@ -17,5 +17,7 @@ public:
 	void Draw(Core::Graphics graphics);
 	Missile** GetMissiles();
 	int GetTotalMissileNumber();
+	bool AreMissilesFromOneTurret();
+	virtual void Destroy();
 };
 

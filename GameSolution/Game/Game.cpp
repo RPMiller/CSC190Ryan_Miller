@@ -12,7 +12,6 @@ Game::Game() : POINTS_PER_HEALTH(30)
 	//lerper->Init(Vector2(SCREEN_WIDTH/2,SCREEN_HEIGHT/2));
 	//lerp = lerper;
 	//recurse = new RecursiveRotation(4,30,Vector2(120,350));
-	effectManager.AddEffect(ship->GetFountainParticleEffect());
 	score = 1000;
 
 	const int SIZE = 10;
@@ -51,9 +50,10 @@ bool Game::Update(float dt)
 	timer.Start();
 	score -= dt;
 	const float BASE_SPEED = 1;
-	const float ROTATE_SPEED = .1f;
 	float y = 0;
-	float rotate = 0;
+	float x = 0;
+	/*float rotateZ = 0;
+	float rotateX = 0;*/
 	if(Input::IsPressed('W') || Input::IsPressed(Input::KEY_UP))
 	{
 		y = -BASE_SPEED;
@@ -64,11 +64,11 @@ bool Game::Update(float dt)
 	}
 	if(Input::IsPressed('A') || Input::IsPressed(Input::KEY_LEFT))
 	{
-		rotate = ROTATE_SPEED;
+		x = -BASE_SPEED;
 	}
 	if(Input::IsPressed('D') || Input::IsPressed(Input::KEY_RIGHT))
 	{
-		rotate = -ROTATE_SPEED;
+		x = BASE_SPEED;
 	}
 	if(Input::IsPressed('1'))
 	{
@@ -94,8 +94,9 @@ bool Game::Update(float dt)
 	}
 	//lerp->Update(Vector2(),dt);
 	boundsOption->CheckBounds(ship,SCREEN_HEIGHT,SCREEN_WIDTH);
-	ship->RotateAroundZ(rotate);
-	ship->Update(Vector3(0,y,0), dt);
+	/*ship->RotateAroundZ(rotateZ);
+	ship->RotateAroundX(rotateX);*/
+	ship->Update(Vector3(x,y,0), dt);
 	effectManager.Update(dt);
 	bool isGameOver = enemyManger.UpdateEnemies(ship,&effectManager,dt);
 
@@ -199,6 +200,7 @@ void Game::DrawInfo(Core::Graphics graphics,float framesPerSecond,float secondsP
 	yDrawPosition += 10;
 	graphics.DrawString(0,yDrawPosition,"Score:");
 	util.DrawValue(graphics,80,yDrawPosition,score + ship->GetHealth() * POINTS_PER_HEALTH);
+	yDrawPosition += 10;
 }
 
 float Game::GetHeight()
@@ -224,5 +226,9 @@ Screen* Game::GetNextScreen()
 		endScreen = new DefeatScreen();
 	}
 	endScreen->SetScore(score + ship->GetHealth() * POINTS_PER_HEALTH);
+	ship->Destroy();
+	effectManager.Destroy();
+	enemyManger.Destroy();
+	delete ship;
 	return endScreen;
 }

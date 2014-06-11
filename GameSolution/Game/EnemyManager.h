@@ -24,7 +24,7 @@ public:
 	void SpawnWave();
 	void BuildBasicEnemy(Vector3 position);
 	void SpawnBoss();
-
+	void Destroy();
 
 	EnemyManager& operator=(const EnemyManager &tmp);
 };

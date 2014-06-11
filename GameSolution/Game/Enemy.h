@@ -11,4 +11,5 @@ public:
 	virtual void FollowHero(Vector3 heroPosition, float dt) = 0;
 	virtual Missile** GetMissiles() = 0;
 	virtual int GetTotalMissileNumber() = 0;
+	virtual bool AreMissilesFromOneTurret() = 0;
 };

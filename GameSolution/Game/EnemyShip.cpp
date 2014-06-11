@@ -10,10 +10,17 @@ EnemyShip::~EnemyShip(void)
 {
 }
 
+void EnemyShip::Destroy()
+{
+	turret.Destroy();
+	GameObject::Destroy();
+}
+
 void EnemyShip::Init(Vector3 position)
 {
 	EnemyShip::position = position;
 	color = Color(150,20,20);
+	health = 1;
 
 	acceleration = 8000.0f;
 	const float shipSize = 26;
@@ -69,4 +76,9 @@ Missile** EnemyShip::GetMissiles()
 int EnemyShip::GetTotalMissileNumber()
 {
 	return turret.GetNumberOfMissiles();
+}
+
+bool EnemyShip::AreMissilesFromOneTurret()
+{
+	return true;
 }

@@ -24,5 +24,6 @@ public:
 	Missile** GetMissiles();
 	int GetNumberOfMissiles();
 	void SetBaseMissileVelocity(Vector3 velocity);
+	virtual void Destroy();
 };
 

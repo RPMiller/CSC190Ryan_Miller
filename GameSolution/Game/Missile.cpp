@@ -36,6 +36,13 @@ Missile::~Missile(void)
 {
 }
 
+void Missile::Destroy()
+{
+	beam->Destroy();
+	delete beam;
+	delete [] shapes;
+}
+
 bool Missile::CheckDead()
 {
 	return ticksOfLife <= 0 && isAlive;

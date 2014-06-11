@@ -9,6 +9,18 @@ EnemyManager::EnemyManager(void) : BOSS_WAVE(4)
 
 EnemyManager::~EnemyManager(void)
 {
+
+}
+
+void EnemyManager::Destroy()
+{
+	for(unsigned i = 0; i < enemies.size() ; i++)
+	{
+		Enemy* enemy = enemies.at(i);
+		enemy->Destroy();
+		delete enemy;
+	}
+	enemies.clear();
 }
 
 bool EnemyManager::UpdateEnemies(HeroShip* hero,ParticleEffectManager* effectManager,float dt)
@@ -51,6 +63,11 @@ bool EnemyManager::UpdateEnemies(HeroShip* hero,ParticleEffectManager* effectMan
 				}
 			}
 
+			if(!enemy->AreMissilesFromOneTurret())
+			{
+				delete [] missiles;
+				}
+
 			for(int missileIndex = 0; missileIndex < hero->turret.GetNumberOfMissiles();missileIndex++)
 			{
 				Missile* next = (hero->turret.GetMissiles()[missileIndex]);
@@ -69,11 +86,12 @@ bool EnemyManager::UpdateEnemies(HeroShip* hero,ParticleEffectManager* effectMan
 		for(Enemy* enemy : enemiesToRemove)
 		{
 			enemies.erase(std::find(enemies.begin(), enemies.end(), enemy));
+			enemy->Destroy();
 			delete enemy;
 		}
 	}
 
-	return !hero->isAlive || !(waveNumber <= BOSS_WAVE || boss->isAlive);
+	return !hero->isAlive || !(waveNumber <= BOSS_WAVE || enemies.size() > 0);
 }
 
 void EnemyManager::DrawEnemies(Core::Graphics graphics)

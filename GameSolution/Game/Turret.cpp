@@ -9,6 +9,22 @@ Turret::Turret()
 
 Turret::~Turret(void)
 {
+	
+}
+
+void Turret::Destroy()
+{
+	for(int i = 0; i < numberOfMissiles ; i++)
+	{
+		Missile* missile = missiles[i];
+		if(missile != 0)
+		{
+			missile->Destroy();
+			delete missile;
+		}
+	}
+	delete [] missiles;
+	GameObject::Destroy();
 }
 
 void Turret::UpdateTurretRotation()
@@ -45,12 +61,7 @@ void Turret::Draw(Core::Graphics graphics)
 		}
 		else
 		{
-			if(next->CheckDead())
-			{
-				delete(next);
-				missiles[i] = 0;
-			}
-			else
+			if(!next->CheckDead())
 			{
 				next->SetColor(color);
 				next->Draw(graphics);
@@ -78,6 +89,7 @@ void Turret::Update(float dt)
 		{
 			if(next->CheckDead())
 			{
+				next->Destroy();
 				delete(next);
 				missiles[i] = 0;
 			}

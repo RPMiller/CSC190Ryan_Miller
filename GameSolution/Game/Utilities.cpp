@@ -25,6 +25,14 @@ void Utilities::DrawValue( Core::Graphics& graphics, int x, int y, int num )
 	graphics.DrawString( x, y, ss.str().c_str());
 }
 
+
+void Utilities::DrawValue( Core::Graphics& graphics, int x, int y, size_t val )
+{
+	stringstream ss;
+	ss << val;
+	graphics.DrawString( x, y, ss.str().c_str());
+}
+
 void Utilities::DrawValue( Core::Graphics& graphics, int x, int y, Vector2 vector )
 {
 	stringstream ss;

@@ -8,6 +8,14 @@ ParticleEffect::ParticleEffect(int numParticles,Vector3 origin) : origin(origin)
 
 ParticleEffect::~ParticleEffect(void)
 {
+	for(int i = 0; i < numberOfParticles; i++)
+	{
+		particles[i].Destroy();
+	}
+	if(numberOfParticles > 0)
+	{
+		delete [] particles;
+	}
 }
 
 void ParticleEffect::SetOrigin(Vector3 nextOrigin)

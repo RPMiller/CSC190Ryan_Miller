@@ -17,5 +17,6 @@ public:
 	void Draw(Core::Graphics graphics);
 	void SetPosition(Vector3 position);
 	Turret GetTurret();
+	virtual void Destroy();
 };
 

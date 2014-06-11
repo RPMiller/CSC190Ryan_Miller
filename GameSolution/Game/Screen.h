@@ -2,6 +2,7 @@
 #include "Core.h"
 #include "ScreenConstants.h"
 #include "Utilities.h"
+#include "DebugMemory.h"
 
 class Screen
 {

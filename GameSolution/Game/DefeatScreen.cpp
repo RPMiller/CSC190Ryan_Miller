@@ -28,5 +28,7 @@ void DefeatScreen::Draw(Core::Graphics& graphics)
 
 Screen* DefeatScreen::GetNextScreen()
 {
-	return new IntroScreen();
+	Screen* intro = new IntroScreen();
+	intro->SetScore(score);
+	return intro;
 }

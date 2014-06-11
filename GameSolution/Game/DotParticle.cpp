@@ -4,10 +4,9 @@
 DotParticle::DotParticle(void)
 {
 	numberOfShapes = 1;
+	int numberOfParticleLines = 2;
 	shapes = new Shape[numberOfShapes];
 	shouldVaryColor = false;
-
-	int numberOfParticleLines = 2;
 
 	Vector3* particleLines = new Vector3[numberOfParticleLines];
 	particleLines[0] = Vector3(0,0,0);

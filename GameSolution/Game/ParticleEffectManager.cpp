@@ -8,6 +8,20 @@ ParticleEffectManager::ParticleEffectManager(void)
 
 ParticleEffectManager::~ParticleEffectManager(void)
 {
+	
+}
+
+void ParticleEffectManager::Destroy()
+{
+	for(unsigned i = 0; i < effects.size() ; i++)
+	{
+		ParticleEffect* effect = effects.at(i); 
+		if(effect != 0)
+		{
+			delete effect;
+		}
+	}
+	effects.clear();
 }
 
 
@@ -16,6 +30,7 @@ void ParticleEffectManager::Update(float dt)
 	std::vector<ParticleEffect*> effectsToRemove;
 	for(ParticleEffect* effect : effects)
 	{
+		dt;
 		effect->Update(dt);
 		if(!effect->isRunning())
 		{

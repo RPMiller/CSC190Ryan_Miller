@@ -43,5 +43,7 @@ public:
 	Core::RGB VaryColor();
 	void SetColor(Color color);
 	Color GetColor();
+
+	virtual void Destroy();
 };
 

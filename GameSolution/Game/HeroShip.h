@@ -8,8 +8,6 @@
 class HeroShip :
 	public Collideable
 {
-	FountainParticleEffect* fountain;
-
 public:
 	Turret turret;
 	HeroShip(void);
@@ -19,7 +17,8 @@ public:
 	void Update(Vector3 accelerationVector,float dt);
 	void Update(float dt);
 	void Fire();
-	FountainParticleEffect* GetFountainParticleEffect();
-	void UpdateFountain();
 	ExplosionParticleEffect* ExplodeObject();
+	Vector3 MaxVelocity;
+
+	virtual void Destroy();
 };

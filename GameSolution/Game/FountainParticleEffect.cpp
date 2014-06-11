@@ -28,6 +28,7 @@ void FountainParticleEffect::Update(float dt)
 		particles[i].UpdateLifeSpan(dt);
 		if(!particles[i].isAlive)
 		{
+			particles[i].Destroy();
 			InitializeParticle(i);
 		}
 	}
@@ -45,11 +46,12 @@ void FountainParticleEffect::Draw(Core::Graphics graphics)
 
 void FountainParticleEffect::InitializeParticle(int index)
 {
-	particles[index] = DotParticle();
-	particles[index].SetPosition(origin);
+	DotParticle dotParticle;
+	dotParticle.SetPosition(origin);
 	Vector2 unitVector = randomGenerator.GenerateRandomVector(direction.x - range,direction.x + range,direction.y - range,direction.y + range);
-	particles[index].SetVelocity(Vector3(unitVector.x,unitVector.y,-2) * randomGenerator.GenerateRandomFloat(20,60));
-	particles[index].SetLifeSpan(randomGenerator.GenerateRandomFloat(1,3));
+	dotParticle.SetVelocity(Vector3(unitVector.x,unitVector.y,-2) * randomGenerator.GenerateRandomFloat(20,60));
+	dotParticle.SetLifeSpan(randomGenerator.GenerateRandomFloat(1,3));
+	particles[index] = dotParticle;
 }
 
 void FountainParticleEffect::SetRange(float range)

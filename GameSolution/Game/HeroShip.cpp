@@ -10,17 +10,20 @@ HeroShip::~HeroShip(void)
 	//delete shapes;
 }
 
+void HeroShip::Destroy()
+{
+	GameObject::Destroy();
+	turret.Destroy();
+}
+
 void HeroShip::Init(Vector3 position)
 {
 	HeroShip::position = position;
-	fountain = new FountainParticleEffect(500,Vector3(position.x,position.y + height / 2,position.z + depth / 2));
-	fountain->Init();
-	fountain->SetColor(Color(255,150,0));
 	turret = BasicTurret();
 
 	health = 10;
 
-	acceleration = 12;
+	acceleration = 20.5f;
 	numberOfShapes = 19;
 	shapes = new Shape[numberOfShapes];
 
@@ -77,6 +80,7 @@ void HeroShip::Init(Vector3 position)
 	height = GetHeight();
 	width = GetWidth();
 	depth = GetDepth();
+	MaxVelocity = Vector3(35,35,35);
 }
 
 void HeroShip::Draw(Core::Graphics graphics)
@@ -89,36 +93,49 @@ void HeroShip::Draw(Core::Graphics graphics)
 void HeroShip::Update(Vector3 accelerationVector,float dt)
 {
 	GameObject::Update(accelerationVector,dt);
+
+	if(velocity.x >= 0)
+	{
+		if(velocity.x > MaxVelocity.x)
+		{
+			velocity.x = MaxVelocity.x;
+		}
+	}
+	else
+	{
+		if(velocity.x < -MaxVelocity.x)
+		{
+			velocity.x = -MaxVelocity.x;
+		}
+	}
+
+	if(velocity.y >= 0)
+	{
+		if(velocity.y > MaxVelocity.y)
+		{
+			velocity.y = MaxVelocity.y;
+		}
+	}
+	else
+	{
+		if(velocity.y < -MaxVelocity.y)
+		{
+			velocity.y = -MaxVelocity.y;
+		}
+	}
+
 	turret.Update(dt);
-	UpdateFountain();
 }
 	
 void HeroShip::Update(float dt)
 {
 	GameObject::Update(dt);
 	turret.Update(dt);
-	UpdateFountain();
 }
 
 void HeroShip::Fire()
 {
 	turret.Fire();
-}
-
-FountainParticleEffect* HeroShip::GetFountainParticleEffect()
-{
-	return fountain;
-}
-
-void HeroShip::UpdateFountain()
-{
-	Vector3 down(0,1,0);
-	Vector3 fountainOffSet(0 , 17,0);
-	Vector3 fountainOrigin(Vector3(position.x,position.y,position.z));
-	Matrix4 rotation;
-	rotation.RotateAroundZ(radsRotatedAroundZ);
-	fountain->SetOrigin(fountainOffSet * rotation + fountainOrigin);
-	fountain->SetDirection(down * rotation);
 }
 
 ExplosionParticleEffect* HeroShip::ExplodeObject()

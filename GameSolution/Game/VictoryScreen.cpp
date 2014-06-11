@@ -28,5 +28,7 @@ void VictoryScreen::Draw(Core::Graphics& graphics)
 
 Screen* VictoryScreen::GetNextScreen()
 {
-	return new IntroScreen();
+	Screen* intro = new IntroScreen();
+	intro->SetScore(score);
+	return intro;
 }

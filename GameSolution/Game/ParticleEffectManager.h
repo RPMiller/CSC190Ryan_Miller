@@ -11,5 +11,6 @@ public:
 	void Update(float dt);
 	void Draw(Core::Graphics graphics);
 	void AddEffect(ParticleEffect* effect);
+	void Destroy();
 };
 

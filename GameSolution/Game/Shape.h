@@ -3,6 +3,7 @@
 #include<Core.h>
 #include "Matrix4.h"
 #include "MyMathUtil.h"
+#include "DebugMemory.h"
 
 class Shape
 {
@@ -25,5 +26,6 @@ public:
 	void SetTranslationMatrix(Matrix4 translationMatrix);
 	void SetPosition(Vector3 position);
 	Matrix4 GetTranslationMatrix();
+	virtual void Destroy();
 };
 

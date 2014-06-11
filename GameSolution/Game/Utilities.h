@@ -19,5 +19,6 @@ public:
 	void DrawValue( Core::Graphics& graphics, int x, int y, Matrix3 matrix );
 	void DrawValue( Core::Graphics& graphics, int x, int y, Vector3 num );
 	void DrawValue( Core::Graphics& graphics, int x, int y, Matrix4 matrix );
+	void DrawValue( Core::Graphics& graphics, int x, int y, size_t val );
 };
 

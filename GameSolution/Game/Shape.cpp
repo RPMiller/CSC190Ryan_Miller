@@ -55,7 +55,12 @@ Shape::Shape(Vector3* lines,int numOfLines,Matrix4 translationMatrix):lines(line
 
 Shape::~Shape()
 {
-	//delete[] lines;
+
+}
+
+void Shape::Destroy()
+{
+	delete[] lines;
 }
 
 void Shape::DrawShape(Core::Graphics graphics,Vector3 center)

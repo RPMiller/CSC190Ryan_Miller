@@ -11,6 +11,13 @@ Boss::~Boss(void)
 {
 }
 
+void Boss::Destroy()
+{
+	leftEye.Destroy();
+	rightEye.Destroy();
+	GameObject::Destroy();
+}
+
 bool Boss::CheckCollision(Missile* missile)
 {
 	if(leftEye.isAlive)
@@ -30,7 +37,7 @@ bool Boss::CheckCollision(Missile* missile)
 	}
 	if(!leftEye.isAlive)
 	{
-		leftEye.SetColor(Color(255,255,255));
+  		leftEye.SetColor(Color(255,255,255));
 	}
 	isAlive = leftEye.isAlive || rightEye.isAlive;
 	return isAlive;
@@ -155,4 +162,9 @@ Missile** Boss::GetMissiles()
 int Boss::GetTotalMissileNumber()
 {
 	return leftEye.GetTurret().GetNumberOfMissiles() + rightEye.GetTurret().GetNumberOfMissiles();
+}
+
+bool Boss::AreMissilesFromOneTurret()
+{
+	return false;
 }

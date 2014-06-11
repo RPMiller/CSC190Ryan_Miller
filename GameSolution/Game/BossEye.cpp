@@ -10,6 +10,12 @@ BossEye::~BossEye(void)
 {
 }
 
+void BossEye::Destroy()
+{
+	turret.Destroy();
+	GameObject::Destroy();
+}
+
 ExplosionParticleEffect* BossEye::ExplodeObject()
 {
 	return new ExplosionParticleEffect(300,position);

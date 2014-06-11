@@ -15,6 +15,7 @@
 #include "Matrix4.h"
 #include "ScreenConstants.h"
 #include "IntroScreen.h"
+#include "DebugMemory.h"
 
 #ifdef LOG_ON
 #define ASSERT(expr, ...)  do { const char* msg = #expr##" "##__VA_ARGS__; if (!(expr)) {LOG(Severe, msg ); END_LOG DebugBreak(); exit(1);}}while(0);
@@ -25,6 +26,7 @@
 using Core::Input;
 
 Screen* game;
+Utilities util;
 //const float SCREEN_WIDTH = 1024;
 //const float SCREEN_HEIGHT = 768;
 //HeroShip* ship;
@@ -44,8 +46,11 @@ void Draw(Core::Graphics& graphics);
 
 int main()
 {
+	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF |
+ _CRTDBG_CHECK_ALWAYS_DF
+ );
 #pragma warning(disable : 4127)
-	ASSERT(false,"test");
+	ASSERT(true,"test");
 #pragma warning(default : 4127)
 	game = new IntroScreen();
 	game->SetScore(0);
@@ -61,7 +66,9 @@ bool Update(float dt)
 {
 	if(game->Update(dt))
 	{
-		game = game->GetNextScreen();
+		Screen* nextScreen = game->GetNextScreen();
+		delete game;
+		game = nextScreen;
 		LOG(Info,"Screen Changed");
 	}
 	bool shouldExit = Input::IsPressed(Input::KEY_ESCAPE);
@@ -117,4 +124,19 @@ void Draw(Core::Graphics& graphics)
 	//	previous = vector;
 	//}
 	game->Draw(graphics);
+
+#ifdef DEBUG
+	int yDrawPosition = (int)SCREEN_HEIGHT - 60;
+	_CrtMemState state;
+	_CrtMemCheckpoint(&state);
+	graphics.DrawString(0,yDrawPosition,"LCounts : ");
+	util.DrawValue(graphics,80,yDrawPosition,state.lCounts[_CLIENT_BLOCK]);
+	yDrawPosition -= 15;
+	graphics.DrawString(0,yDrawPosition,"LSizes : ");
+	util.DrawValue(graphics,80,yDrawPosition,state.lSizes[_CLIENT_BLOCK]);
+	yDrawPosition -= 15;
+	graphics.DrawString(0,yDrawPosition,"LHighWaterCount : ");
+	util.DrawValue(graphics,140,yDrawPosition,state.lHighWaterCount);
+	yDrawPosition -= 15;
+#endif
 }

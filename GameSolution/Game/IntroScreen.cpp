@@ -15,8 +15,7 @@ IntroScreen::~IntroScreen(void)
 bool IntroScreen::Update(float dt)
 {
 	Core::Input input;
-	dt;
-	const float roatationRate = -0.1f;
+	const float roatationRate = -10.5f * dt;
 	hero->RotateAroundZ(roatationRate);
 	input;
 	return input.IsPressed('F');
@@ -33,5 +32,7 @@ void IntroScreen::Draw(Core::Graphics& graphics)
 
 Screen* IntroScreen::GetNextScreen()
 {
+	hero->Destroy();
+	delete hero;
 	return new Game();
 }

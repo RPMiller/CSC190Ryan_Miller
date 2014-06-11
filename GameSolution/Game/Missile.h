@@ -12,5 +12,6 @@ public:
 	bool CheckDead();
 	void Update(float dt);
 	void Draw(Core::Graphics graphics);
+	virtual void Destroy();
 };
 

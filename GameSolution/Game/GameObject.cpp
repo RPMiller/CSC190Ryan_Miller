@@ -15,7 +15,19 @@ GameObject::GameObject()
 
 GameObject::~GameObject(void)
 {
-	//delete[] shapes;
+
+}
+
+void GameObject::Destroy()
+{
+	for(int i =0; i < numberOfShapes; i++)
+	{
+		shapes[i].Destroy();
+	}
+	if(numberOfShapes > 0)
+	{
+		delete[] shapes;
+	}
 }
 
 Matrix4 GameObject::GetTranslationMatrix()
