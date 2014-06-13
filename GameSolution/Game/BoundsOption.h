@@ -2,6 +2,7 @@
 #include<Core.h>
 #include "Vector2.h"
 #include "GameObject.h"
+#include "DebugMemory.h"
 
 class BoundsOption
 {

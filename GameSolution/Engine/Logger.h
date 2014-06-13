@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "DebugMemory.h"
 
 using std::vector;
 using std::string;

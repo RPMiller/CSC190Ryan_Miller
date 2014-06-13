@@ -5,16 +5,15 @@ Game::Game() : POINTS_PER_HEALTH(30)
 	arbOn = false;
 	boundsType = "bounce";
 	boundsOption = &wallOption;
-	HeroShip* heroShip = new HeroShip();
-	heroShip->Init(Vector3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0));
-	ship = heroShip;
+	ship = new HeroShip();
+	ship->Init(Vector3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0));
 	//Lerper* lerper = new Lerper();
 	//lerper->Init(Vector2(SCREEN_WIDTH/2,SCREEN_HEIGHT/2));
 	//lerp = lerper;
 	//recurse = new RecursiveRotation(4,30,Vector2(120,350));
 	score = 1000;
 
-	const int SIZE = 10;
+	/*const int SIZE = 10;
 	Vector3 fountainDirection(0,0,-50);
 	float xPortionWidth = SCREEN_WIDTH / SIZE;
 	float yPortionHeight = SCREEN_HEIGHT / SIZE;
@@ -34,7 +33,7 @@ Game::Game() : POINTS_PER_HEALTH(30)
 			fountain->SetColor(Color(255,255,0));
 			effectManager.AddEffect(fountain);
 		}
-	}
+	}*/
 }
 
 
@@ -111,23 +110,23 @@ void Game::Draw(Core::Graphics& graphics)
 {
 	float secondsPerFrame = timer.Interval(); 
 	float framesPerSecond = 1 / secondsPerFrame;
-	float lerpTicks;
+	//float lerpTicks;
 	float heroTicks;
-	float recurseTicks;
+	//float recurseTicks;
 	float effectTicks;
 
-	timer.Start();
+	/*timer.Start();
 	drawTimer.Start();
-	//lerp->Draw(graphics);
-	lerpTicks = drawTimer.Stop();
+	lerp->Draw(graphics);
+	lerpTicks = drawTimer.Stop();*/
 
 	drawTimer.Start();
 	ship->Draw(graphics);
 	heroTicks= drawTimer.Stop();
 
-	drawTimer.Start();
-	//recurse->Rotate(.05f,graphics);
-	recurseTicks= drawTimer.Stop();
+	/*drawTimer.Start();
+	recurse->Rotate(.05f,graphics);
+	recurseTicks= drawTimer.Stop();*/
 
 	DrawInfo(graphics, framesPerSecond, secondsPerFrame);
 
@@ -147,9 +146,9 @@ void Game::Draw(Core::Graphics& graphics)
 #ifdef DEBUG
 	profiler.AddEntry("Drew Game",timer.Stop());
 	profiler.AddEntry("FPS",framesPerSecond);
-	profiler.AddEntry("Drew Lerp",lerpTicks);
+	//profiler.AddEntry("Drew Lerp",lerpTicks);
 	profiler.AddEntry("Drew Hero",heroTicks);
-	profiler.AddEntry("Drew Recurse",recurseTicks);
+	//profiler.AddEntry("Drew Recurse",recurseTicks);
 	profiler.AddEntry("Drew Effects",effectTicks);
 #endif
 }

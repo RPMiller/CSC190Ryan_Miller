@@ -15,7 +15,7 @@ void ParticleEffectManager::Destroy()
 {
 	for(unsigned i = 0; i < effects.size() ; i++)
 	{
-		ParticleEffect* effect = effects.at(i); 
+		ParticleEffect* effect = effects.at(i);
 		if(effect != 0)
 		{
 			delete effect;
@@ -43,6 +43,7 @@ void ParticleEffectManager::Update(float dt)
 		effects.erase(std::find(effects.begin(), effects.end(), effect));
 		delete effect;
 	}
+	effectsToRemove.clear();
 }
 	
 void ParticleEffectManager::Draw(Core::Graphics graphics)

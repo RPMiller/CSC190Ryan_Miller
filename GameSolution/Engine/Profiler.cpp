@@ -22,6 +22,7 @@ Profiler::~Profiler(void)
 		file << "\n";
 	}
 	file.close();
+	categories.clear();
 }
 
 void Profiler::NewFrame()

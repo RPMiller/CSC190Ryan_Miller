@@ -3,6 +3,7 @@
 #include<vector>
 #include <iostream>
 #include <fstream>
+#include "DebugMemory.h"
 
 #pragma warning(disable : 4251)
 

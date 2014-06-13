@@ -23,12 +23,10 @@ Missile::Missile(Vector3 position,Vector3 velocity,float ticks)
 
 	//Shape missile = Shape(lines,NUMBER_LINES,Matrix4());
 	beam = new BeamShape(4);
-	Shape beamShape;
-	beamShape = *beam;
-	shapes[0] = beamShape;
-	height = beamShape.GetHeight();
-	width = beamShape.GetWidth();
-	depth = beamShape.GetDepth();
+	height = beam->GetHeight();
+	width = beam->GetWidth();
+	depth = beam->GetDepth();
+	shapes[0] = *beam;
 }
 
 

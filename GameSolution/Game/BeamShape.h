@@ -19,5 +19,13 @@ public:
 		x;
 		return *this;
 	}
+
+	// conversion to Shape (assignment):
+	Shape& operator= (const BeamShape& x) 
+	{
+		//stupid warning
+		x;
+		return *this;
+	}
 };
 

@@ -51,7 +51,7 @@ int main()
 
 	//_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF);
 #pragma warning(disable : 4127)
-	ASSERT(false,"test");
+	ASSERT(true,"test");
 #pragma warning(default : 4127)
 	game = new IntroScreen();
 	game->SetScore(0);
